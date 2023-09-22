@@ -1,9 +1,10 @@
-import Test from "./components/Test";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
-      <Test />
+      {/* <Test /> */}
+      <NavBar />
     </>
   );
 }
