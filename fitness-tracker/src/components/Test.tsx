@@ -32,6 +32,8 @@ const Test = () => {
   } = useStravaActivities(startDateTimestamp, endDateTimestamp);
 
   console.log(activities);
+  console.log(error);
+  console.log("isLoading", isLoading);
   return (
     <div>
       {activities?.map((activity) => (
