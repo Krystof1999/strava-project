@@ -1,11 +1,35 @@
+import { useState } from "react";
+
 const NavBar = () => {
+  const [selectedTab, setSelectedTab] = useState("DEN");
+
+  const handleClick = (tab: string) => {
+    setSelectedTab(tab);
+  };
   return (
     <>
-      <div className="flex bg-gray-200 my-4 mx-10 px-2 py-3 rounded-md justify-evenly text-sm font-medium">
-        <div className=" border-r-2 border-black pr-3">DEN</div>
-        <div className=" border-r-2 border-black pr-3">TÝDEN</div>
-        <div className=" border-r-2 border-black pr-3">MĚSÍC</div>
-        <div className="">ROK</div>
+      <div className="flex bg-gray-200 my-4 mx-10 px-2 py-3 rounded-md justify-evenly text-sm font-medium ">
+        <div
+          className=" border-r-2 border-black pr-3"
+          onClick={() => handleClick("DEN")}
+        >
+          DEN
+        </div>
+        <div
+          className=" border-r-2 border-black pr-3"
+          onClick={() => handleClick("TÝDEN")}
+        >
+          TÝDEN
+        </div>
+        <div
+          className=" border-r-2 border-black pr-3"
+          onClick={() => handleClick("MĚSÍC")}
+        >
+          MĚSÍC
+        </div>
+        <div className="" onClick={() => handleClick("ROK")}>
+          ROK
+        </div>
       </div>
     </>
   );
