@@ -36,6 +36,7 @@ const Test = () => {
   console.log("isLoading", isLoading);
   return (
     <div>
+      Test
       {activities?.map((activity) => (
         <li>{activity.sport_type}</li>
       ))}
