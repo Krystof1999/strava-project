@@ -1,11 +1,12 @@
-import { useState } from "react";
+interface Props {
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const NavBar = () => {
-  const [selectedTab, setSelectedTab] = useState("DEN");
-
+const NavBar = ({ setSelectedTab }: Props) => {
   const handleClick = (tab: string) => {
     setSelectedTab(tab);
   };
+
   return (
     <>
       <div className="flex bg-gray-200 my-4 mx-10 px-2 py-3 rounded-md justify-evenly text-sm font-medium ">

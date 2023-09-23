@@ -23,8 +23,8 @@ const refreshToken = "a3d56d1c76d837a5f835e21e8ffcb9bc7025da4d";
 const auth_link = "https://www.strava.com/oauth/token";
 
 const useStravaActivities = (
-  startDateTimestamp: number,
-  endDateTimestamp: number
+  startDateTimestamp?: number,
+  endDateTimestamp?: number
 ) => {
   const fetchActivities = async () => {
     const stravaAccesToken = await axios.all([
@@ -42,7 +42,7 @@ const useStravaActivities = (
   };
 
   return useQuery<Activity[], Error>({
-    queryKey: ["activities"],
+    queryKey: ["activities", startDateTimestamp, endDateTimestamp],
     queryFn: fetchActivities,
   });
 };

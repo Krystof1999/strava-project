@@ -17,8 +17,8 @@ import useStravaActivities from "../hooks/useStravaActivities";
 
 // //? one day
 // Calculate Luxon DateTime objects for the start and end of September 20, 2023
-const startDate = DateTime.fromISO("2023-09-20T00:00:00Z");
-const endDate = DateTime.fromISO("2023-09-20T23:59:59Z");
+const startDate = DateTime.fromISO("2023-09-19T00:00:00Z"); // 19 rano
+const endDate = DateTime.fromISO("2023-09-20T23:59:59Z"); // 19 vecer
 
 // Convert Luxon DateTime objects to epoch timestamps in seconds
 const startDateTimestamp = Math.floor(startDate.toSeconds());
@@ -31,9 +31,12 @@ const Test = () => {
     isLoading,
   } = useStravaActivities(startDateTimestamp, endDateTimestamp);
 
+  //   const { data: activities, error, isLoading } = useStravaActivities();
+
   console.log(activities);
-  console.log(error);
-  console.log("isLoading", isLoading);
+
+  if (error) return <p>Error: {error.message}</p>;
+  if (isLoading) return <p>Loading in process...</p>;
   return (
     <div>
       Test
