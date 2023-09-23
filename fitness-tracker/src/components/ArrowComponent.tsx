@@ -47,20 +47,64 @@ const ArrowComponent = ({ selectedTab }: Props) => {
 
   const startTimeStamp = Math.floor(startTimeDate.toSeconds());
   const endTimeStamp = Math.floor(endTimeDate.toSeconds());
+  //   console.log(startTimeStamp);
+  //   console.log(endTimeStamp);
 
-  const { data } = useStravaActivities(startTimeStamp, endTimeStamp);
+  //   useEffect(() => {
+  //     setDate({ day: startDay, month: startMonth, year: startYear });
+  //   }, []);
+
+  //   const dateTime = DateTime.fromSeconds(endTimeStamp).toISO();
+  //   console.log(dateTime);
+
+  //   console.log(startTimeStamp);
+  //   console.log(endTimeStamp);
+  const { data, isLoading, error } = useStravaActivities(
+    startTimeStamp,
+    endTimeStamp
+  );
   console.log(data);
 
   const handlePrev = () => {
     if (selectedTab === "DEN") {
-      setDate({ ...date, day: date.day - 1 });
+      if (date.day === 1) {
+        setDate((prevDate: Date) => {
+          const prevMonth = prevDate.month === 1 ? 12 : prevDate.month - 1;
+          //   const prevYear =
+          //     prevDate.year === 1 ? prevDate.year - 1 : prevDate.year;
+          const prevYear =
+            prevDate.month === 1 && prevDate.day === 1
+              ? prevDate.year - 1
+              : prevDate.year;
+          const lastDayOfPrevMonth = DateTime.local(
+            // find the last day in month
+            prevYear,
+            prevMonth
+          ).daysInMonth;
+          return {
+            ...prevDate,
+            day: lastDayOfPrevMonth,
+            month: prevMonth,
+            year: prevYear,
+          } as Date;
+        });
+      } else {
+        setDate({ ...date, day: date.day - 1 });
+      }
     }
   };
+
+  //   const daysInMonth = DateTime.local(2023, startMonth).daysInMonth;
+  //   console.log(daysInMonth);
+
+  if (error) return <p>Error</p>;
+  //   if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="pt-4">
       <div className="flex justify-center items-center gap-2">
         <div onClick={handlePrev}>
+          {/* <div> */}
           <MdKeyboardArrowLeft size={30} />
         </div>
         <div className="w-[140px] flex justify-center">zari 2023</div>
