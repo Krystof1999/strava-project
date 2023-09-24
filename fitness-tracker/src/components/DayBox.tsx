@@ -55,7 +55,7 @@ const DayBox = ({ displayDate }: Props) => {
               <h1 className=" text-[15px] font-medium">{activity.name}</h1>
             </div>
           </div>
-          <div className="mt-10 pl-5 ">
+          <div className="mt-10 pl-5">
             <DayActivityProperty activity={activity} />
           </div>
         </div>
