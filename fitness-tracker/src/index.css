@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+#selected-tab{
+color:#F68C29;
+}
