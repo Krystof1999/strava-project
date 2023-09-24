@@ -5,14 +5,14 @@ interface Map {
   summary_polyline: string;
 }
 
-interface Activity {
+export interface Activity {
   name: string;
   average_speed: number;
   distance: number;
-  elapsed_time: number;
-  moving_time: number; // todo - choose only one time
+  moving_time: number;
+  total_elevation_gain: number;
   max_speed: number;
-  sport_type: string;
+  sport_type: string; // todo - choose only one type
   type: string; // todo - choose only one type
   map: Map;
 }

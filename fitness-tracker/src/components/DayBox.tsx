@@ -1,7 +1,8 @@
-import { LuBike } from "react-icons/lu";
-import { DisplayDate } from "../App";
 import { DateTime } from "luxon";
+import { DisplayDate } from "../App";
 import useStravaActivities from "../hooks/useStravaActivities";
+import ActivityIcon from "./ActivityIcon";
+import DayActivityProperty from "./DayActivityProperty";
 
 interface Props {
   displayDate: DisplayDate;
@@ -36,7 +37,7 @@ const DayBox = ({ displayDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
-  console.log(activities?.map((a) => a.distance));
+  console.log(activities);
 
   if (isLoading) return <p>Loading...</p>; //todo - replace with spinner or skeleton
   if (error) return <p>{error.message}</p>;
@@ -45,39 +46,17 @@ const DayBox = ({ displayDate }: Props) => {
     <>
       {activities?.map((activity) => (
         <div
-          className=" m-5 border border-1 border-gray-300 rounded-md p-2"
+          className=" my-10 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
           key={activity.name}
         >
-          <div className="flex items-center">
-            <div className="border border-1 rounded-md p-1">
-              <LuBike size={30} />
-            </div>
-            <div className="ml-[30px] ">
-              <h1>{activity.name}</h1>
+          <div className="flex items-center ">
+            <ActivityIcon activity={activity} />
+            <div className="ml-[20px] ">
+              <h1 className=" text-[15px] font-medium">{activity.name}</h1>
             </div>
           </div>
-          <div className="mt-10 pl-5">
-            <div className="flex mb-2">
-              <p>Celkem:</p>
-              <p>150km 110m</p>
-            </div>
-            <div className="flex mb-2">
-              <p>Čas:</p>
-              <p>12h 23min</p>
-            </div>
-            <div className="flex mb-2">
-              <p>Výškové metry"</p>
-              <p>654m</p>
-            </div>
-            <div className="flex mb-2">
-              <p>Průměrná rychlost:</p>
-              <p>14 km/h</p>
-            </div>
-            <div className="flex mb-2">
-              <p>Maximální rychlost:</p>
-              <p>38 km/h</p>
-            </div>
-            <div>Mapa</div>
+          <div className="mt-10 pl-5 ">
+            <DayActivityProperty activity={activity} />
           </div>
         </div>
       ))}
