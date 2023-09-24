@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { DisplayDate } from "../App";
+import { DisplayDate } from "../entities/DisplayDate";
 interface Props {
   selectedTab: string;
   displayDate: DisplayDate;

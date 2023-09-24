@@ -3,7 +3,7 @@ import { BsQuestion } from "react-icons/bs";
 import { FaWalking, FaRunning, FaSkiingNordic, FaSkiing } from "react-icons/fa";
 import { BiSwim } from "react-icons/bi";
 import { GiWeightLiftingUp } from "react-icons/gi";
-import { Activity } from "../hooks/useStravaActivities";
+import { Activity } from "../entities/Activity";
 
 interface Props {
   activity: Activity;

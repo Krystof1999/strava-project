@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
-import { DisplayDate } from "../App";
 import useStravaActivities from "../hooks/useStravaActivities";
 import ActivityIcon from "./ActivityIcon";
 import DayActivityProperty from "./DayActivityProperty";
+import { DisplayDate } from "../entities/DisplayDate";
 
 interface Props {
   displayDate: DisplayDate;

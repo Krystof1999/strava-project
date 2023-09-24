@@ -1,4 +1,4 @@
-import { DisplayDate } from "../App";
+import { DisplayDate } from "../entities/DisplayDate";
 import DayBox from "./DayBox";
 
 interface Props {

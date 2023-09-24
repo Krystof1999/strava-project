@@ -1,4 +1,4 @@
-import { Activity } from "../hooks/useStravaActivities";
+import { Activity } from "../entities/Activity";
 
 interface Props {
   activity: Activity;

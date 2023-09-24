@@ -3,13 +3,8 @@ import ArrowComponent from "./components/ArrowComponent";
 import NavBar from "./components/NavBar";
 import ComponentBox from "./components/ComponentBox";
 import { DateTime } from "luxon";
+import { DisplayDate } from "./entities/DisplayDate";
 // import Test from "./components/Test";
-
-export interface DisplayDate {
-  day: number;
-  month: number;
-  year: number;
-}
 
 function App() {
   const dateNow = DateTime.now();

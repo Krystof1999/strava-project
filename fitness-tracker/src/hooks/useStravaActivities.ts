@@ -1,21 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-interface Map {
-  summary_polyline: string;
-}
-
-export interface Activity {
-  name: string;
-  average_speed: number;
-  distance: number;
-  moving_time: number;
-  total_elevation_gain: number;
-  max_speed: number;
-  sport_type: string; // todo - choose only one type
-  type: string; // todo - choose only one type
-  map: Map;
-}
+import { Activity } from "../entities/Activity";
 
 const clientID = "113941";
 const clientSecret = "e1a171cf2a2b433f9114da11f04133845500d171";
