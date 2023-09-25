@@ -3,6 +3,7 @@ import useStravaActivities from "../hooks/useStravaActivities";
 import ActivityIcon from "./ActivityIcon";
 import DayActivityProperty from "./DayActivityProperty";
 import { DisplayDate } from "../entities/DisplayDate";
+import LazyIcon from "./LazyIcon";
 
 interface Props {
   displayDate: DisplayDate;
@@ -48,6 +49,7 @@ const DayBox = ({ displayDate }: Props) => {
 
   if (isLoading) return <p>Loading...</p>; //todo - replace with spinner or skeleton
   if (error) return <p>{error.message}</p>;
+  if (activities.length === 0) return <LazyIcon />;
 
   return (
     <>
