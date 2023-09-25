@@ -45,7 +45,7 @@ const ArrowComponent = ({
         <div onClick={handlePrev}>
           <MdKeyboardArrowLeft size={30} />
         </div>
-        <div className="w-[140px] flex justify-center">
+        <div className="w-[140px] flex justify-center activity-font font-medium">
           {displayDate.day}.{displayDate.month}.{displayDate.year}
         </div>
         <div>

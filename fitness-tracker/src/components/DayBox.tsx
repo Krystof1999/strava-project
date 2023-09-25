@@ -44,9 +44,13 @@ const DayBox = ({ displayDate }: Props) => {
 
   return (
     <>
+      <h1 className="activity-font flex justify-center mt-4">
+        Celkem:<span className="text-[#F68C29] mx-1">120</span>km
+      </h1>
+
       {activities?.map((activity) => (
         <div
-          className=" my-10 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
+          className=" my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
           key={activity.name}
         >
           <div className="flex items-center ">
