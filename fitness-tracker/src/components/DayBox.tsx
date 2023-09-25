@@ -37,7 +37,14 @@ const DayBox = ({ displayDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
-  console.log(activities);
+
+  //? Calculate the sum of the kilometers per day
+  const activityDistances = activities?.map((a) => a.distance);
+  const sumOfActivityDistances = activityDistances?.reduce(
+    (prevValue, currentValue) => prevValue + currentValue,
+    0
+  );
+  const sumOfKmPerDay = (sumOfActivityDistances! / 1000).toFixed(0);
 
   if (isLoading) return <p>Loading...</p>; //todo - replace with spinner or skeleton
   if (error) return <p>{error.message}</p>;
@@ -45,7 +52,7 @@ const DayBox = ({ displayDate }: Props) => {
   return (
     <>
       <h1 className="activity-font flex justify-center mt-4">
-        Celkem:<span className="text-[#F68C29] mx-1">120</span>km
+        Celkem:<span className="text-[#F68C29] mx-1">{sumOfKmPerDay}</span>km
       </h1>
 
       {activities?.map((activity) => (
