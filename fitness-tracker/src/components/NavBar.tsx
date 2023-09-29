@@ -13,24 +13,24 @@ const NavBar = ({ selectedTab, setSelectedTab }: Props) => {
       <div className="flex bg-gray-200 my-4 mx-10 px-2 py-3 rounded-md justify-evenly text-sm font-medium items-center">
         <div
           className=" border-r border-gray-500 pr-3"
-          onClick={() => handleClick("DEN")}
+          onClick={() => handleClick("DAY")}
         >
-          <p id={`${selectedTab === "DEN" ? "selected-tab" : ""}`}>DEN</p>
+          <p id={`${selectedTab === "DAY" ? "selected-tab" : ""}`}>DEN</p>
         </div>
         <div
           className=" border-r border-gray-500 pr-3"
-          onClick={() => handleClick("TÝDEN")}
+          onClick={() => handleClick("WEEK")}
         >
-          <p id={`${selectedTab === "TÝDEN" ? "selected-tab" : ""}`}>TÝDEN</p>
+          <p id={`${selectedTab === "WEEK" ? "selected-tab" : ""}`}>TÝDEN</p>
         </div>
         <div
           className=" border-r border-gray-500 pr-3"
-          onClick={() => handleClick("MĚSÍC")}
+          onClick={() => handleClick("MONTH")}
         >
-          <p id={`${selectedTab === "MĚSÍC" ? "selected-tab" : ""}`}>MĚSÍC</p>
+          <p id={`${selectedTab === "MONTH" ? "selected-tab" : ""}`}>MĚSÍC</p>
         </div>
-        <div className="" onClick={() => handleClick("ROK")}>
-          <p id={`${selectedTab === "ROK" ? "selected-tab" : ""}`}>ROK</p>
+        <div className="" onClick={() => handleClick("YEAR")}>
+          <p id={`${selectedTab === "YEAR" ? "selected-tab" : ""}`}>ROK</p>
         </div>
       </div>
     </>

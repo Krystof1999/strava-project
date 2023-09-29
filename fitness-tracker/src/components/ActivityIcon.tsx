@@ -6,7 +6,8 @@ import { GiWeightLiftingUp } from "react-icons/gi";
 import { Activity } from "../entities/Activity";
 
 interface Props {
-  activity: Activity;
+  activity?: Activity;
+  activityType?: string;
 }
 
 type SportType =
@@ -19,7 +20,7 @@ type SportType =
   | "WeightTraining"
   | "AlpineSki";
 
-const ActivityIcon = ({ activity }: Props) => {
+const ActivityIcon = ({ activity, activityType }: Props) => {
   const iconsMap = {
     MountainBikeRide: <LuBike size={30} />,
     Ride: <LuBike size={30} />,
@@ -33,6 +34,8 @@ const ActivityIcon = ({ activity }: Props) => {
 
   const sportType = activity?.sport_type as SportType;
   const icon = iconsMap[sportType] || <BsQuestion size={30} />;
+
+  if (activityType) return iconsMap[activityType as SportType];
 
   return (
     <div className="border border-1 border-[#F68C29] rounded-md p-1">

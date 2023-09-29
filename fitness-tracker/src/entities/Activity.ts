@@ -2,6 +2,7 @@ import { Map } from "./Map";
 
 export interface Activity {
   name: string;
+  start_date: string;
   average_speed: number;
   distance: number;
   moving_time: number;

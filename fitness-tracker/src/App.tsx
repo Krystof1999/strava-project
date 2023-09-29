@@ -4,14 +4,15 @@ import NavBar from "./components/NavBar";
 import ComponentBox from "./components/ComponentBox";
 import { DateTime } from "luxon";
 import { DisplayDate } from "./entities/DisplayDate";
+import { WeekDate } from "./entities/WeekDate";
 // import Test from "./components/Test";
 
 function App() {
-  const dateNow = DateTime.now();
+  const todayDate = DateTime.now();
 
-  const startDay = dateNow.day;
-  const startMonth = dateNow.month;
-  const startYear = dateNow.year;
+  const startDay = todayDate.day;
+  const startMonth = todayDate.month;
+  const startYear = todayDate.year;
 
   const [displayDate, setDisplayDate] = useState<DisplayDate>({
     day: startDay,
@@ -19,7 +20,24 @@ function App() {
     year: startYear,
   });
 
-  const [selectedTab, setSelectedTab] = useState("DEN");
+  const startOfWeek = todayDate.startOf("week");
+  const endOfWeek = todayDate.endOf("week");
+
+  const formattedStartOfWeek = startOfWeek.toFormat("dd.MM.yyyy");
+  const formattedEndOfWeek = endOfWeek.toFormat("dd.MM.yyyy");
+
+  // Calculate timestamps for the next week
+  const startWeekTimeStamp = Math.floor(startOfWeek.toSeconds());
+  const endWeekTimeStamp = Math.floor(endOfWeek.toSeconds());
+
+  const [displayWeekDate, setDisplayWeekDate] = useState<WeekDate>({
+    start: formattedStartOfWeek,
+    end: formattedEndOfWeek,
+    startTimeStamp: startWeekTimeStamp,
+    endTimeStamp: endWeekTimeStamp,
+  });
+
+  const [selectedTab, setSelectedTab] = useState("DAY");
 
   return (
     <>
@@ -29,8 +47,14 @@ function App() {
         selectedTab={selectedTab}
         displayDate={displayDate}
         setDisplayDate={setDisplayDate}
+        displayWeekDate={displayWeekDate}
+        setDisplayWeekDate={setDisplayWeekDate}
       />
-      <ComponentBox selectedTab={selectedTab} displayDate={displayDate} />
+      <ComponentBox
+        selectedTab={selectedTab}
+        displayDate={displayDate}
+        displayWeekDate={displayWeekDate}
+      />
     </>
   );
 }
