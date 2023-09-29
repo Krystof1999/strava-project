@@ -132,9 +132,7 @@ const ArrowComponent = ({
   return (
     <div className="pt-4">
       {selectedTab === "WEEK" && (
-        <div className="flex justify-center activity-font font-medium">
-          {year}
-        </div>
+        <div className=" text-center activity-font font-medium">{year}</div>
       )}
       <div className="flex justify-center items-center gap-2">
         <div onClick={handlePrev}>

@@ -22,23 +22,30 @@ const WeekBox = ({ displayWeekDate }: Props) => {
   const createDaysInWeek = () => {
     const startTimestamp = displayWeekDate.startTimeStamp; // Monday
     const endTimestamp = displayWeekDate.endTimeStamp; // Sunday
-    const datesOfWeek = [];
+    const daysOfWeek = [];
+
+    // Define an array of day names
+    const dayNames = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
     // Convert timestamps to Luxon DateTime objects
     let currentDate = DateTime.fromSeconds(startTimestamp);
     const endDate = DateTime.fromSeconds(endTimestamp);
 
     while (currentDate <= endDate) {
-      // Format the date as "dd.MM." and push to the array
       const formattedDate = currentDate.toFormat("dd.MM.");
-      datesOfWeek.push(formattedDate);
+      // Get the day of the week (0 for Monday, 1 for Tuesday, etc.)
+      const dayOfWeek = currentDate.weekday - 1;
+      // Get the day name based on the day of the week
+      const dayName = dayNames[dayOfWeek];
 
-      // Add one day to the current date
+      // Push the date and day name as an object to the array
+      daysOfWeek.push({ date: formattedDate, day: dayName });
+
       currentDate = currentDate.plus({ days: 1 });
     }
-
-    return datesOfWeek;
+    return daysOfWeek;
   };
+
   const getActivitiesByEachDay = () => {
     const activitiesByDate: { [date: string]: Activity[] } = {};
 
@@ -58,8 +65,8 @@ const WeekBox = ({ displayWeekDate }: Props) => {
   const getActivityDistanceByEachDay = () => {
     const distanceByEachDay: { [date: string]: number } = {};
     daysInWeek.forEach((day) => {
-      distanceByEachDay[day] =
-        activityByEachDay[day]?.reduce(
+      distanceByEachDay[day.date] =
+        activityByEachDay[day.date]?.reduce(
           (totalDistance, activity) => totalDistance + activity.distance,
           0
         ) / 1000;
@@ -71,8 +78,9 @@ const WeekBox = ({ displayWeekDate }: Props) => {
     const sportTypeByEachDay: { [date: string]: string[] } = {};
 
     daysInWeek.forEach((day) => {
-      sportTypeByEachDay[day] =
-        activityByEachDay[day]?.map((activity) => activity.sport_type) || [];
+      sportTypeByEachDay[day.date] =
+        activityByEachDay[day.date]?.map((activity) => activity.sport_type) ||
+        [];
     });
 
     return sportTypeByEachDay;
@@ -112,27 +120,28 @@ const WeekBox = ({ displayWeekDate }: Props) => {
 
       {daysInWeek.map((day) => (
         <div
-          key={day}
+          key={day.date}
           className={`my-2 mx-10 py-3 border border-1 border-gray-300 rounded-md flex justify-between pl-2 pr-2 activity-font
           ${
-            !isNaN(distanceByEachDay[day])
+            !isNaN(distanceByEachDay[day.date])
               ? ""
               : "border-gray-100 text-gray-200 "
           }`}
         >
           <div className="flex gap-2">
-            <p className="">{day}</p>
+            <p>{day.day}</p>
+            <p>{day.date}</p>
 
-            {sportTypeByEachDay[day].map((sportType, idx) => (
+            {sportTypeByEachDay[day.date].map((sportType, idx) => (
               <div className="pl-2" key={idx}>
                 <ActivityIcon activityType={sportType} />
               </div>
             ))}
           </div>
 
-          {!isNaN(distanceByEachDay[day]) ? (
+          {!isNaN(distanceByEachDay[day.date]) ? (
             <p className=" text-[#F68C29]">
-              {distanceByEachDay[day].toFixed(2)}
+              {distanceByEachDay[day.date].toFixed(2)}
               <span className="text-black"> km</span>
             </p>
           ) : (
