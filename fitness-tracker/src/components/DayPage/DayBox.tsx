@@ -1,9 +1,9 @@
 import { DateTime } from "luxon";
-import useStravaActivities from "../hooks/useStravaActivities";
-import ActivityIcon from "./ActivityIcon";
+import useStravaActivities from "../../hooks/useStravaActivities";
+import ActivityIcon from "../ActivityIcon";
 import DayActivityProperty from "./DayActivityProperty";
-import { DisplayDate } from "../entities/DisplayDate";
-import LazyIcon from "./LazyIcon";
+import { DisplayDate } from "../../entities/DisplayDate";
+import LazyIcon from "../LazyIcon";
 import DayBoxSkeleton from "./DayBoxSkeleton";
 
 interface Props {

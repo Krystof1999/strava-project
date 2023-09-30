@@ -1,4 +1,4 @@
-import { Activity } from "../entities/Activity";
+import { Activity } from "../../entities/Activity";
 
 interface Props {
   activity: Activity;

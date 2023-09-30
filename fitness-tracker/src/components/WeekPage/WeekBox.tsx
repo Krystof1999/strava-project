@@ -1,9 +1,9 @@
 import { DateTime } from "luxon";
-import { WeekDate } from "../entities/WeekDate";
-import useStravaActivities from "../hooks/useStravaActivities";
-import LazyIcon from "./LazyIcon";
-import { Activity } from "../entities/Activity";
-import ActivityIcon from "./ActivityIcon";
+import { WeekDate } from "../../entities/WeekDate";
+import useStravaActivities from "../../hooks/useStravaActivities";
+import LazyIcon from "../LazyIcon";
+import { Activity } from "../../entities/Activity";
+import ActivityIcon from "../ActivityIcon";
 import WeekBoxSkeleton from "./WeekBoxSkeleton";
 
 interface Props {

@@ -1,7 +1,7 @@
 import { DisplayDate } from "../entities/DisplayDate";
 import { WeekDate } from "../entities/WeekDate";
-import DayBox from "./DayBox";
-import WeekBox from "./WeekBox";
+import DayBox from "./DayPage/DayBox";
+import WeekBox from "./WeekPage/WeekBox";
 
 interface Props {
   selectedTab: string;
