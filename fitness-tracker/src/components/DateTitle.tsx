@@ -1,14 +1,14 @@
 import { DateTime } from "luxon";
-import { DisplayDate } from "../entities/DisplayDate";
 import { WeekDate } from "../entities/WeekDate";
+import { DisplayDayDate } from "../entities/DisplayDate";
 
 interface Props {
   selectedTab: string;
-  displayDate: DisplayDate;
+  displayDayDate: DisplayDayDate;
   displayWeekDate: WeekDate;
 }
 
-const DateTitle = ({ selectedTab, displayDate, displayWeekDate }: Props) => {
+const DateTitle = ({ selectedTab, displayDayDate, displayWeekDate }: Props) => {
   const parsedWeekStart = DateTime.fromFormat(
     displayWeekDate.start,
     "dd.MM.yyyy"
@@ -21,7 +21,7 @@ const DateTitle = ({ selectedTab, displayDate, displayWeekDate }: Props) => {
   return (
     <div className="w-[140px] flex justify-center activity-font font-medium">
       {selectedTab === "DAY" &&
-        `${displayDate.day}.${displayDate.month}.${displayDate.year}`}
+        `${displayDayDate.day}.${displayDayDate.month}.${displayDayDate.year}`}
       {selectedTab === "WEEK" && `${weekStart} - ${weekEnd}`}
     </div>
   );

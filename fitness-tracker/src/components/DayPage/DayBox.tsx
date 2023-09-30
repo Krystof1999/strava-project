@@ -2,19 +2,19 @@ import { DateTime } from "luxon";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
 import DayActivityProperty from "./DayActivityProperty";
-import { DisplayDate } from "../../entities/DisplayDate";
 import LazyIcon from "../LazyIcon";
 import DayBoxSkeleton from "./DayBoxSkeleton";
+import { DisplayDayDate } from "../../entities/DisplayDate";
 
 interface Props {
-  displayDate: DisplayDate;
+  displayDayDate: DisplayDayDate;
 }
 
-const DayBox = ({ displayDate }: Props) => {
+const DayBox = ({ displayDayDate }: Props) => {
   const startTimeDate = DateTime.fromObject({
-    day: displayDate.day,
-    month: displayDate.month,
-    year: displayDate.year,
+    day: displayDayDate.day,
+    month: displayDayDate.month,
+    year: displayDayDate.year,
     hour: 0,
     minute: 0,
     second: 0,
@@ -22,9 +22,9 @@ const DayBox = ({ displayDate }: Props) => {
   });
 
   const endTimeDate = DateTime.fromObject({
-    day: displayDate.day,
-    month: displayDate.month,
-    year: displayDate.year,
+    day: displayDayDate.day,
+    month: displayDayDate.month,
+    year: displayDayDate.year,
     hour: 23,
     minute: 59,
     second: 59,

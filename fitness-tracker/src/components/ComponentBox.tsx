@@ -1,18 +1,22 @@
-import { DisplayDate } from "../entities/DisplayDate";
+import { DisplayDayDate } from "../entities/DisplayDate";
 import { WeekDate } from "../entities/WeekDate";
 import DayBox from "./DayPage/DayBox";
 import WeekBox from "./WeekPage/WeekBox";
 
 interface Props {
   selectedTab: string;
-  displayDate: DisplayDate;
+  displayDayDate: DisplayDayDate;
   displayWeekDate: WeekDate;
 }
 
-const ComponentBox = ({ selectedTab, displayDate, displayWeekDate }: Props) => {
+const ComponentBox = ({
+  selectedTab,
+  displayDayDate,
+  displayWeekDate,
+}: Props) => {
   return (
     <div>
-      {selectedTab === "DAY" && <DayBox displayDate={displayDate} />}
+      {selectedTab === "DAY" && <DayBox displayDayDate={displayDayDate} />}
       {selectedTab === "WEEK" && <WeekBox displayWeekDate={displayWeekDate} />}
 
       {/*Week Box */}

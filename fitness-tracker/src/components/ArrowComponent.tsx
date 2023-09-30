@@ -1,27 +1,27 @@
 import { DateTime } from "luxon";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { DisplayDate } from "../entities/DisplayDate";
 import { WeekDate } from "../entities/WeekDate";
 import DateTitle from "./DateTitle";
+import { DisplayDayDate } from "../entities/DisplayDate";
 interface Props {
   selectedTab: string;
-  displayDate: DisplayDate;
-  setDisplayDate: React.Dispatch<React.SetStateAction<DisplayDate>>;
+  displayDayDate: DisplayDayDate;
+  setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
   displayWeekDate: WeekDate;
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
 }
 
 const ArrowComponent = ({
   selectedTab,
-  displayDate,
-  setDisplayDate,
+  displayDayDate,
+  setDisplayDayDate,
   displayWeekDate,
   setDisplayWeekDate,
 }: Props) => {
   const handlePrev = () => {
     if (selectedTab === "DAY") {
-      if (displayDate.day === 1) {
-        setDisplayDate((prevDate: DisplayDate) => {
+      if (displayDayDate.day === 1) {
+        setDisplayDayDate((prevDate: DisplayDayDate) => {
           const prevMonth = prevDate.month === 1 ? 12 : prevDate.month - 1;
           const prevYear =
             prevDate.month === 1 && prevDate.day === 1
@@ -37,10 +37,10 @@ const ArrowComponent = ({
             day: lastDayOfPrevMonth,
             month: prevMonth,
             year: prevYear,
-          } as DisplayDate;
+          } as DisplayDayDate;
         });
       } else {
-        setDisplayDate({ ...displayDate, day: displayDate.day - 1 });
+        setDisplayDayDate({ ...displayDayDate, day: displayDayDate.day - 1 });
       }
     }
     if (selectedTab === "WEEK") {
@@ -74,16 +74,16 @@ const ArrowComponent = ({
   const handleNext = () => {
     if (selectedTab === "DAY") {
       const currentDateTime = DateTime.fromObject({
-        day: displayDate.day,
-        month: displayDate.month,
-        year: displayDate.year,
+        day: displayDayDate.day,
+        month: displayDayDate.month,
+        year: displayDayDate.year,
       });
 
       const lastDayOfCurrentMonth = currentDateTime.endOf("month");
 
       if (currentDateTime.day === lastDayOfCurrentMonth.day) {
         // Transition to the next month and handle year change if necessary
-        setDisplayDate((prevDate: DisplayDate) => {
+        setDisplayDayDate((prevDate: DisplayDayDate) => {
           const nextMonth = prevDate.month === 12 ? 1 : prevDate.month + 1;
           const nextYear =
             prevDate.month === 12 ? prevDate.year + 1 : prevDate.year;
@@ -93,11 +93,11 @@ const ArrowComponent = ({
             day: 1,
             month: nextMonth,
             year: nextYear,
-          } as DisplayDate;
+          } as DisplayDayDate;
         });
       } else {
         // Increment the day by 1
-        setDisplayDate({ ...displayDate, day: displayDate.day + 1 });
+        setDisplayDayDate({ ...displayDayDate, day: displayDayDate.day + 1 });
       }
     }
     if (selectedTab === "WEEK") {
@@ -140,7 +140,7 @@ const ArrowComponent = ({
         </div>
         <DateTitle
           selectedTab={selectedTab}
-          displayDate={displayDate}
+          displayDayDate={displayDayDate}
           displayWeekDate={displayWeekDate}
         />
         <div onClick={handleNext}>

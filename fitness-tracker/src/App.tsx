@@ -3,8 +3,8 @@ import { useState } from "react";
 import ArrowComponent from "./components/ArrowComponent";
 import ComponentBox from "./components/ComponentBox";
 import NavBar from "./components/NavBar";
-import { DisplayDate } from "./entities/DisplayDate";
 import { WeekDate } from "./entities/WeekDate";
+import { DisplayDayDate } from "./entities/DisplayDate";
 
 function App() {
   const todayDate = DateTime.now();
@@ -13,7 +13,7 @@ function App() {
   const startMonth = todayDate.month;
   const startYear = todayDate.year;
 
-  const [displayDate, setDisplayDate] = useState<DisplayDate>({
+  const [displayDayDate, setDisplayDayDate] = useState<DisplayDayDate>({
     day: startDay,
     month: startMonth,
     year: startYear,
@@ -40,19 +40,17 @@ function App() {
 
   return (
     <>
-      {/* <Test /> */}
-
       <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
       <ArrowComponent
         selectedTab={selectedTab}
-        displayDate={displayDate}
-        setDisplayDate={setDisplayDate}
+        displayDayDate={displayDayDate}
+        setDisplayDayDate={setDisplayDayDate}
         displayWeekDate={displayWeekDate}
         setDisplayWeekDate={setDisplayWeekDate}
       />
       <ComponentBox
         selectedTab={selectedTab}
-        displayDate={displayDate}
+        displayDayDate={displayDayDate}
         displayWeekDate={displayWeekDate}
       />
     </>
