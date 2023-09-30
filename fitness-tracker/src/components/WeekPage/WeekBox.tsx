@@ -139,7 +139,7 @@ const WeekBox = ({ displayWeekDate }: Props) => {
             <p>{day.date}</p>
 
             {sportTypeByEachDay[day.date].map((sportType, idx) => (
-              <div className="pl-2" key={idx}>
+              <div key={idx}>
                 <ActivityIcon activityType={sportType} />
               </div>
             ))}
