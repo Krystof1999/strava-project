@@ -1,11 +1,10 @@
+import { DateTime } from "luxon";
 import { useState } from "react";
 import ArrowComponent from "./components/ArrowComponent";
-import NavBar from "./components/NavBar";
 import ComponentBox from "./components/ComponentBox";
-import { DateTime } from "luxon";
+import NavBar from "./components/NavBar";
 import { DisplayDate } from "./entities/DisplayDate";
 import { WeekDate } from "./entities/WeekDate";
-// import Test from "./components/Test";
 
 function App() {
   const todayDate = DateTime.now();

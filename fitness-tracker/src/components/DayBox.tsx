@@ -4,6 +4,7 @@ import ActivityIcon from "./ActivityIcon";
 import DayActivityProperty from "./DayActivityProperty";
 import { DisplayDate } from "../entities/DisplayDate";
 import LazyIcon from "./LazyIcon";
+import DayBoxSkeleton from "./DayBoxSkeleton";
 
 interface Props {
   displayDate: DisplayDate;
@@ -47,7 +48,7 @@ const DayBox = ({ displayDate }: Props) => {
   );
   const sumOfKmPerDay = (sumOfActivityDistances! / 1000).toFixed(0);
 
-  if (isLoading) return <p>Loading...</p>; //todo - replace with spinner or skeleton
+  if (isLoading) return <DayBoxSkeleton />;
   if (error) return <p>{error.message}</p>;
   if (activities.length === 0) return <LazyIcon />;
 
