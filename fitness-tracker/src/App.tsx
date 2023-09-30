@@ -41,6 +41,7 @@ function App() {
   return (
     <>
       {/* <Test /> */}
+
       <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
       <ArrowComponent
         selectedTab={selectedTab}

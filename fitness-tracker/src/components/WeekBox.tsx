@@ -4,6 +4,7 @@ import useStravaActivities from "../hooks/useStravaActivities";
 import LazyIcon from "./LazyIcon";
 import { Activity } from "../entities/Activity";
 import ActivityIcon from "./ActivityIcon";
+import WeekBoxSkeleton from "./WeekBoxSkeleton";
 
 interface Props {
   displayWeekDate: WeekDate;
@@ -96,7 +97,12 @@ const WeekBox = ({ displayWeekDate }: Props) => {
     return (sumOfActivityDistances! / 1000).toFixed(0);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <>
+        <WeekBoxSkeleton />
+      </>
+    );
   if (error)
     return (
       <div className="rounded-md flex justify-center ">
