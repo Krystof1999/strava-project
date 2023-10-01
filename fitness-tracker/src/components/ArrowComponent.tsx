@@ -3,12 +3,18 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { WeekDate } from "../entities/WeekDate";
 import DateTitle from "./DateTitle";
 import { DisplayDayDate } from "../entities/DisplayDate";
+import { MonthDate } from "../entities/MonthDate";
+import { getWeeksInMonth } from "./utils/dateUtils";
+import { useState } from "react";
+
 interface Props {
   selectedTab: string;
   displayDayDate: DisplayDayDate;
   setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
   displayWeekDate: WeekDate;
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
+  displayMonthDate: MonthDate;
+  setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
 const ArrowComponent = ({
@@ -17,7 +23,21 @@ const ArrowComponent = ({
   setDisplayDayDate,
   displayWeekDate,
   setDisplayWeekDate,
+  displayMonthDate,
+  setDisplayMonthDate,
 }: Props) => {
+  const year_week = DateTime.fromFormat(
+    displayWeekDate.start,
+    "dd.MM.yyyy"
+  ).year;
+
+  //current month
+  const currentMonth = parseInt(DateTime.now().toFormat("MM"));
+  const currentYear = DateTime.now().year;
+
+  const [count, setCount] = useState(currentMonth);
+  const [currentYearMonthView, setCurrentYearMonthView] = useState(currentYear);
+
   const handlePrev = () => {
     if (selectedTab === "DAY") {
       if (displayDayDate.day === 1) {
@@ -67,6 +87,39 @@ const ArrowComponent = ({
         end: formattedPrevEnd,
         startTimeStamp: startTimeStamp,
         endTimeStamp: endTimeStamp,
+      });
+    }
+    if (selectedTab === "MONTH") {
+      const currentMonthDate = DateTime.fromFormat(
+        displayMonthDate.monthName,
+        "MMMM"
+      ); // luxon obj
+      const previousMonthDate = currentMonthDate.minus({ months: 1 }); // luxon obj
+
+      const newMonthName = previousMonthDate.toFormat("MMMM"); //fe. January
+      const newMonth = previousMonthDate.month; // fe. 8
+      let updatedYear = currentYearMonthView; // fe. 2023
+
+      if (count === 1) {
+        // set year to previous one
+        updatedYear = currentYearMonthView - 1;
+        setCurrentYearMonthView(updatedYear);
+        setCount(12);
+      } else {
+        setCount(count - 1);
+      }
+
+      const weeksInMonth = getWeeksInMonth(updatedYear, newMonth);
+      const start = weeksInMonth[0].start;
+      const end = weeksInMonth[weeksInMonth.length - 1].end;
+
+      setDisplayMonthDate({
+        start: start,
+        end: end,
+        monthName: newMonthName,
+        month: newMonth,
+        year: updatedYear,
+        weeksInMonth: weeksInMonth,
       });
     }
   };
@@ -126,13 +179,52 @@ const ArrowComponent = ({
         endTimeStamp: endTimeStamp,
       });
     }
+    if (selectedTab === "MONTH") {
+      const currentMonthDate = DateTime.fromFormat(
+        displayMonthDate.monthName,
+        "MMMM"
+      ); // luxon obj
+      const nextMonthDate = currentMonthDate.plus({ months: 1 }); // luxon obj
+
+      const newMonthName = nextMonthDate.toFormat("MMMM"); //fe. January
+      const newMonth = nextMonthDate.month; // fe. 8
+      let updatedYear = currentYearMonthView; // fe. 2023
+
+      if (count === 12) {
+        // set year to next one
+        updatedYear = currentYearMonthView + 1;
+        setCurrentYearMonthView(updatedYear);
+        setCount(1);
+      } else {
+        setCount(count + 1);
+      }
+
+      const weeksInMonth = getWeeksInMonth(updatedYear, newMonth);
+      const start = weeksInMonth[0].start;
+      const end = weeksInMonth[weeksInMonth.length - 1].end;
+
+      setDisplayMonthDate({
+        start: start,
+        end: end,
+        monthName: newMonthName,
+        month: newMonth,
+        year: updatedYear,
+        weeksInMonth: weeksInMonth,
+      });
+    }
   };
-  const year = DateTime.fromFormat(displayWeekDate.start, "dd.MM.yyyy").year;
 
   return (
     <div className="pt-4">
       {selectedTab === "WEEK" && (
-        <div className=" text-center activity-font font-medium">{year}</div>
+        <div className=" text-center activity-font font-medium">
+          {year_week}
+        </div>
+      )}
+      {selectedTab === "MONTH" && (
+        <div className=" text-center activity-font font-medium">
+          {displayMonthDate.year} {displayMonthDate.monthName}
+        </div>
       )}
       <div className="flex justify-center items-center gap-2">
         <div onClick={handlePrev}>

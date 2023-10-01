@@ -1,6 +1,8 @@
 import { DisplayDayDate } from "../entities/DisplayDate";
+import { MonthDate } from "../entities/MonthDate";
 import { WeekDate } from "../entities/WeekDate";
 import DayBox from "./DayPage/DayBox";
+import MonthBox from "./MonthPage/MonthBox";
 import WeekBox from "./WeekPage/WeekBox";
 
 interface Props {
@@ -9,6 +11,7 @@ interface Props {
   displayDayDate: DisplayDayDate;
   setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
   displayWeekDate: WeekDate;
+  displayMonthDate: MonthDate;
 }
 
 const ComponentBox = ({
@@ -17,6 +20,7 @@ const ComponentBox = ({
   displayDayDate,
   setDisplayDayDate,
   displayWeekDate,
+  displayMonthDate,
 }: Props) => {
   return (
     <div>
@@ -28,10 +32,9 @@ const ComponentBox = ({
           setDisplayDayDate={setDisplayDayDate}
         />
       )}
-
-      {/*Week Box */}
-      {/*Month Box */}
-      {/*Year Box */}
+      {selectedTab === "MONTH" && (
+        <MonthBox displayMonthDate={displayMonthDate} />
+      )}
     </div>
   );
 };

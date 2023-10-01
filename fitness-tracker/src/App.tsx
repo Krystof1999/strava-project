@@ -5,6 +5,8 @@ import ComponentBox from "./components/ComponentBox";
 import NavBar from "./components/NavBar";
 import { WeekDate } from "./entities/WeekDate";
 import { DisplayDayDate } from "./entities/DisplayDate";
+import { MonthDate } from "./entities/MonthDate";
+import { getWeeksInMonth } from "./components/utils/dateUtils";
 
 function App() {
   const todayDate = DateTime.now();
@@ -36,6 +38,22 @@ function App() {
     endTimeStamp: endWeekTimeStamp,
   });
 
+  const currentMonth = todayDate.toFormat("MMMM");
+  const weeksInMonth = getWeeksInMonth(todayDate.year, todayDate.month);
+
+  // Find the first and last weeks in weeksInMonth
+  const start = weeksInMonth[0].start;
+  const end = weeksInMonth[weeksInMonth.length - 1].end;
+
+  const [displayMonthDate, setDisplayMonthDate] = useState<MonthDate>({
+    start: start,
+    end: end,
+    monthName: currentMonth,
+    month: startMonth,
+    year: startYear,
+    weeksInMonth: weeksInMonth,
+  });
+
   const [selectedTab, setSelectedTab] = useState("DAY");
 
   return (
@@ -47,6 +65,8 @@ function App() {
         setDisplayDayDate={setDisplayDayDate}
         displayWeekDate={displayWeekDate}
         setDisplayWeekDate={setDisplayWeekDate}
+        displayMonthDate={displayMonthDate}
+        setDisplayMonthDate={setDisplayMonthDate}
       />
       <ComponentBox
         selectedTab={selectedTab}
@@ -54,6 +74,7 @@ function App() {
         displayDayDate={displayDayDate}
         setDisplayDayDate={setDisplayDayDate}
         displayWeekDate={displayWeekDate}
+        displayMonthDate={displayMonthDate}
       />
     </>
   );
