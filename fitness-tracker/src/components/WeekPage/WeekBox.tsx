@@ -5,12 +5,19 @@ import LazyIcon from "../LazyIcon";
 import { Activity } from "../../entities/Activity";
 import ActivityIcon from "../ActivityIcon";
 import WeekBoxSkeleton from "./WeekBoxSkeleton";
+import { DisplayDayDate } from "../../entities/DisplayDate";
 
 interface Props {
   displayWeekDate: WeekDate;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
 }
 
-const WeekBox = ({ displayWeekDate }: Props) => {
+const WeekBox = ({
+  displayWeekDate,
+  setSelectedTab,
+  setDisplayDayDate,
+}: Props) => {
   const {
     data: activities,
     isLoading,
@@ -97,6 +104,23 @@ const WeekBox = ({ displayWeekDate }: Props) => {
     return (sumOfActivityDistances! / 1000).toFixed(0);
   };
 
+  const handleDayClick = (dayDate: string) => {
+    setSelectedTab("DAY");
+
+    const year = DateTime.fromFormat(displayWeekDate.start, "dd.MM.yyyy").year;
+    const luxonDate = DateTime.fromFormat(`${dayDate}${year}`, "dd.MM.yyyy");
+
+    const day = luxonDate.day;
+    const month = luxonDate.month;
+
+    const displayDayData = {
+      day: day,
+      month: month,
+      year: year,
+    };
+    setDisplayDayDate(displayDayData);
+  };
+
   if (isLoading)
     return (
       <>
@@ -115,7 +139,6 @@ const WeekBox = ({ displayWeekDate }: Props) => {
   const daysInWeek = createDaysInWeek();
   const activityByEachDay = getActivitiesByEachDay();
   const distanceByEachDay = getActivityDistanceByEachDay();
-
   const sportTypeByEachDay = getSportTypeByEachDay();
 
   return (
@@ -126,6 +149,7 @@ const WeekBox = ({ displayWeekDate }: Props) => {
 
       {daysInWeek.map((day) => (
         <div
+          onClick={() => handleDayClick(day.date)}
           key={day.date}
           className={`my-2 mx-10 py-3 border border-1 border-gray-300 rounded-md flex justify-between pl-2 pr-2 activity-font
           ${

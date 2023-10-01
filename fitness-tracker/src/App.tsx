@@ -50,7 +50,9 @@ function App() {
       />
       <ComponentBox
         selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
         displayDayDate={displayDayDate}
+        setDisplayDayDate={setDisplayDayDate}
         displayWeekDate={displayWeekDate}
       />
     </>
