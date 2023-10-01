@@ -29,7 +29,7 @@ const DayBox = ({ displayDayDate }: Props) => {
     minute: 59,
     second: 59,
     millisecond: 0,
-  }).setZone("utc");
+  });
 
   const startTimeStamp = Math.floor(startTimeDate.toSeconds());
   const endTimeStamp = Math.floor(endTimeDate.toSeconds());
