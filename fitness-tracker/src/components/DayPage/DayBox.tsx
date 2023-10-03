@@ -5,6 +5,8 @@ import DayActivityProperty from "./DayActivityProperty";
 import LazyIcon from "../LazyIcon";
 import DayBoxSkeleton from "./DayBoxSkeleton";
 import { DisplayDayDate } from "../../entities/DisplayDate";
+import SumDistance from "../SumDistance";
+import { getActivityDistanceSum } from "../utils/activityUtils";
 
 interface Props {
   displayDayDate: DisplayDayDate;
@@ -40,13 +42,7 @@ const DayBox = ({ displayDayDate }: Props) => {
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
 
-  //? Calculate the sum of the kilometers per day
-  const activityDistances = activities?.map((a) => a.distance);
-  const sumOfActivityDistances = activityDistances?.reduce(
-    (prevValue, currentValue) => prevValue + currentValue,
-    0
-  );
-  const sumOfKmPerDay = (sumOfActivityDistances! / 1000).toFixed(0);
+  const sumOfKmPerDay = getActivityDistanceSum(activities);
 
   if (isLoading) return <DayBoxSkeleton />;
   if (error) return <p>{error.message}</p>;
@@ -54,9 +50,7 @@ const DayBox = ({ displayDayDate }: Props) => {
 
   return (
     <>
-      <h1 className="activity-font flex justify-center mt-4">
-        Celkem:<span className="text-[#F68C29] mx-1">{sumOfKmPerDay}</span>km
-      </h1>
+      <SumDistance sumsOfKm={sumOfKmPerDay} />
 
       {activities?.map((activity) => (
         <div

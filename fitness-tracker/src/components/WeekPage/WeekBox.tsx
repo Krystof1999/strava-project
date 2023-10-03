@@ -6,6 +6,8 @@ import { Activity } from "../../entities/Activity";
 import ActivityIcon from "../ActivityIcon";
 import WeekBoxSkeleton from "./WeekBoxSkeleton";
 import { DisplayDayDate } from "../../entities/DisplayDate";
+import SumDistance from "../SumDistance";
+import { getActivityDistanceSum } from "../utils/activityUtils";
 
 interface Props {
   displayWeekDate: WeekDate;
@@ -94,16 +96,6 @@ const WeekBox = ({
     return sportTypeByEachDay;
   };
 
-  const getActivityDistanceSum = () => {
-    //* Calculate the sum of the kilometers per day
-    const activityDistances = activities?.map((a) => a.distance);
-    const sumOfActivityDistances = activityDistances?.reduce(
-      (prevValue, currentValue) => prevValue + currentValue,
-      0
-    );
-    return (sumOfActivityDistances! / 1000).toFixed(0);
-  };
-
   const handleDayClick = (dayDate: string) => {
     setSelectedTab("DAY");
 
@@ -135,7 +127,7 @@ const WeekBox = ({
     );
   if (activities.length === 0) return <LazyIcon />;
 
-  const sumOfKmPerDay = getActivityDistanceSum();
+  const sumOfKmPerWeek = getActivityDistanceSum(activities);
   const daysInWeek = createDaysInWeek();
   const activityByEachDay = getActivitiesByEachDay();
   const distanceByEachDay = getActivityDistanceByEachDay();
@@ -143,9 +135,7 @@ const WeekBox = ({
 
   return (
     <>
-      <h1 className="activity-font flex justify-center mt-4 mb-5">
-        Celkem:<span className="text-[#F68C29] mx-1">{sumOfKmPerDay}</span>km
-      </h1>
+      <SumDistance sumsOfKm={sumOfKmPerWeek} />
 
       {daysInWeek.map((day) => (
         <div

@@ -184,6 +184,7 @@ const ArrowComponent = ({
         displayMonthDate.monthName,
         "MMMM"
       ); // luxon obj
+
       const nextMonthDate = currentMonthDate.plus({ months: 1 }); // luxon obj
 
       const newMonthName = nextMonthDate.toFormat("MMMM"); //fe. January
@@ -221,7 +222,6 @@ const ArrowComponent = ({
           {year_week}
         </div>
       )}
-
       <div className="flex justify-center items-center gap-2">
         <div onClick={handlePrev}>
           <MdKeyboardArrowLeft size={30} />
