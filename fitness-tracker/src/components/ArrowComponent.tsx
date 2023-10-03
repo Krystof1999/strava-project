@@ -221,11 +221,7 @@ const ArrowComponent = ({
           {year_week}
         </div>
       )}
-      {selectedTab === "MONTH" && (
-        <div className=" text-center activity-font font-medium">
-          {displayMonthDate.year} {displayMonthDate.monthName}
-        </div>
-      )}
+
       <div className="flex justify-center items-center gap-2">
         <div onClick={handlePrev}>
           <MdKeyboardArrowLeft size={30} />
@@ -234,6 +230,7 @@ const ArrowComponent = ({
           selectedTab={selectedTab}
           displayDayDate={displayDayDate}
           displayWeekDate={displayWeekDate}
+          displayMonthDate={displayMonthDate}
         />
         <div onClick={handleNext}>
           <MdKeyboardArrowRight size={30} />
