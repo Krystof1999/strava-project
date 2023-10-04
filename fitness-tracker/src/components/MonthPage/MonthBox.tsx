@@ -4,20 +4,23 @@ import { DateTime } from "luxon";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
+import { getActivityDistanceSum } from "../utils/activityUtils";
 
 interface Props {
   displayMonthDate: MonthDate;
 }
 
 const MonthBox = ({ displayMonthDate }: Props) => {
-  // Parse the date string using Luxon
-  // const luxonOvjStart = DateTime.fromFormat(
-  //   displayMonthDate.start,
-  //   "dd.MM.yyyy"
-  // );
-  // const luxonOvjEnd = DateTime.fromFormat(displayMonthDate.end, "dd.MM.yyyy");
-  // const startOfTheWeek = `${luxonOvjStart.day}.${luxonOvjStart.month}.`;
-  // const endOfTheWeek = `${luxonOvjEnd.day}.${luxonOvjEnd.month}.`;
+  const getWeekDatesWithoutYear = (weeks: string) => {
+    const luxonObj = DateTime.fromFormat(weeks, "dd.MM.yyyy");
+    return `${luxonObj.day}.${luxonObj.month}`;
+  };
+
+  const weekDatesWithouYear: { start: string; end: string }[] =
+    displayMonthDate.weeksInMonth.map(({ start, end }) => ({
+      start: getWeekDatesWithoutYear(start),
+      end: getWeekDatesWithoutYear(end),
+    }));
 
   /*
   {week
@@ -45,7 +48,9 @@ const MonthBox = ({ displayMonthDate }: Props) => {
     data: activities,
     isLoading,
     error,
-  } = useStravaActivities(startTimeStamp, endTimeStamp); //TODO - make in only on one month? from 1 to 31
+  } = useStravaActivities(startTimeStamp, endTimeStamp);
+
+  const sumOfKm = getActivityDistanceSum(activities);
 
   if (isLoading) return <p>loading...</p>; // todo -sceleton
   if (error) return <p>{error.message}</p>;
@@ -53,43 +58,34 @@ const MonthBox = ({ displayMonthDate }: Props) => {
 
   return (
     <>
-      <SumDistance sumsOfKm="3" />
+      <SumDistance sumsOfKm={sumOfKm} />
       <div className="grid grid-cols-2 my-5 mx-10 gap-4">
-        <div className=" border border-1 border-gray-300 rounded-md p-2 activity-font">
-          {/* <h1 className="flex justify-center pb-4">{`${startOfTheWeek} - ${endOfTheWeek}`}</h1> */}
-          <h1>28.8. - 3.9.</h1>
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <div className="border border-1 border-[#F68C29] rounded-md p-1">
-                <LuBike size={30} />
-              </div>
-              <div>
-                <p>100km</p>
-              </div>
-            </div>
+        {weekDatesWithouYear.map((week) => (
+          <div className="border border-1 border-gray-300 rounded-md p-2 activity-font">
+            <h1>
+              {week.start} - {week.end}
+            </h1>
 
-            <div className="flex items-center gap-3">
-              <div className="border border-1 border-[#F68C29] rounded-md p-1">
-                <LuBike size={30} />
-              </div>
-              <div>
-                <p>44km</p>
-              </div>
+            <div className="flex flex-col gap-3">
+              {activities.map(
+                (
+                  activity //TODO
+                ) => (
+                  <div className="flex items-center gap-3">
+                    <div className="border border-1 border-[#F68C29] rounded-md p-1">
+                      <LuBike size={30} />
+                    </div>
+                    <div>
+                      <p>{`${activity.distance} km`}</p>
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
-        </div>
+        ))}
 
-        <div className=" border border-1 border-gray-300 rounded-md p-2 activity-font">
-          <h1>28.8. - 3.9.</h1>
-          <div className="flex items-center gap-3">
-            <div className="border border-1 border-[#F68C29] rounded-md p-1">
-              <LuBike size={30} />
-            </div>
-            <p>100km</p>
-          </div>
-        </div>
-
-        <div className=" border border-1 border-gray-300 rounded-md p-2 activity-font">
+        {/* <div className=" border border-1 border-gray-300 rounded-md p-2 activity-font">
           <h1>28.8. - 3.9.</h1>
           <div className="flex items-center gap-3">
             <div className="border border-1 border-[#F68C29] rounded-md p-1">
@@ -138,6 +134,16 @@ const MonthBox = ({ displayMonthDate }: Props) => {
             <p>100km</p>
           </div>
         </div>
+
+        <div className=" border border-1 border-gray-300 rounded-md p-2 activity-font">
+          <h1>28.8. - 3.9.</h1>
+          <div className="flex items-center gap-3">
+            <div className="border border-1 border-[#F68C29] rounded-md p-1">
+              <LuBike size={30} />
+            </div>
+            <p>100km</p>
+          </div>
+        </div> */}
       </div>
     </>
   );
