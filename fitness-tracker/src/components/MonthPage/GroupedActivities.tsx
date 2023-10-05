@@ -1,16 +1,19 @@
-import useStravaActivities from "../hooks/useStravaActivities";
-import ActivityIcon from "./ActivityIcon";
-import LazyIcon from "./LazyIcon";
-import { getGroupActivitiesByType } from "./utils/activityUtils";
+import useStravaActivities from "../../hooks/useStravaActivities";
+import ActivityIcon from "../ActivityIcon";
+import LazyIcon from "../LazyIcon";
+import SumDistance from "../SumDistance";
+import {
+  getActivityDistanceSum,
+  getGroupActivitiesByType,
+} from "../utils/activityUtils";
+import EmptyMonthBox from "./EmptyMonthBox";
 
 interface Props {
   startTimeStamp: number;
   endTimeStamp: number;
 }
 
-// TODO: rename this component; bike type - leave just one - now 2
-
-const TestComponent = ({ startTimeStamp, endTimeStamp }: Props) => {
+const GroupedActivities = ({ startTimeStamp, endTimeStamp }: Props) => {
   const {
     data: activities,
     isLoading,
@@ -18,13 +21,15 @@ const TestComponent = ({ startTimeStamp, endTimeStamp }: Props) => {
   } = useStravaActivities(startTimeStamp, endTimeStamp);
 
   if (isLoading) return <p>loading...</p>; // todo -sceleton
-  if (error) return <p>{error.message}</p>;
+  if (error) return <EmptyMonthBox />;
   if (activities.length === 0) return <LazyIcon />;
 
   const groupActivitiesByType = getGroupActivitiesByType(activities);
+  const sumOfKm = getActivityDistanceSum(activities);
 
   return (
     <>
+      <SumDistance sumsOfKm={sumOfKm} />
       {groupActivitiesByType.map((activity, idx) => (
         <div className="flex items-center gap-3">
           <>
@@ -43,4 +48,4 @@ const TestComponent = ({ startTimeStamp, endTimeStamp }: Props) => {
   );
 };
 
-export default TestComponent;
+export default GroupedActivities;

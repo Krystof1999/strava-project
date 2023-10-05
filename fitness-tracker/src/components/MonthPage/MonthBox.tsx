@@ -1,10 +1,10 @@
-import { MonthDate } from "../../entities/MonthDate";
 import { DateTime } from "luxon";
+import { MonthDate } from "../../entities/MonthDate";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
-import TestComponent from "../TestComponent";
+import GroupedActivities from "./GroupedActivities";
 
 interface Props {
   displayMonthDate: MonthDate;
@@ -49,26 +49,26 @@ const MonthBox = ({ displayMonthDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
+  console.log(activities);
 
   const sumOfKm = getActivityDistanceSum(activities);
 
   if (isLoading) return <p>loading...</p>; // todo -sceleton
-  if (error) return <p>{error.message}</p>;
+  if (error) return "";
   if (activities.length === 0) return <LazyIcon />;
 
   return (
     <>
       <SumDistance sumsOfKm={sumOfKm} />
-
       <div className="grid grid-cols-2 my-5 mx-10 gap-4">
         {weekDatesWithouYear.map((week, idx) => (
           <div className="border border-1 border-gray-300 rounded-md p-2 activity-font">
-            <h1>
+            <h1 className="flex justify-center mb-4 activity-font">
               {week.start} - {week.end}
             </h1>
 
             <div className="flex flex-col gap-3">
-              <TestComponent // todo -rename
+              <GroupedActivities
                 startTimeStamp={timeStampsForWeeksInMonth[idx].startTimeStamp}
                 endTimeStamp={timeStampsForWeeksInMonth[idx].endTimeStamp}
               />
