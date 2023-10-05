@@ -29,6 +29,7 @@ const useStravaActivities = (
   return useQuery<Activity[], Error>({
     queryKey: ["activities", startDateTimestamp, endDateTimestamp],
     queryFn: fetchActivities,
+    retry: 1,
   });
 };
 
