@@ -31,7 +31,7 @@ const GroupedActivities = ({ startTimeStamp, endTimeStamp }: Props) => {
     <>
       <SumDistance sumsOfKm={sumOfKm} />
       {groupActivitiesByType.map((activity, idx) => (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3" key={activity.sport_type}>
           <>
             <div className="border border-1 border-[#F68C29] rounded-md p-1">
               <ActivityIcon

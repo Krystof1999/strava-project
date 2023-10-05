@@ -49,7 +49,6 @@ const MonthBox = ({ displayMonthDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
-  console.log(activities);
 
   const sumOfKm = getActivityDistanceSum(activities);
 
@@ -62,7 +61,10 @@ const MonthBox = ({ displayMonthDate }: Props) => {
       <SumDistance sumsOfKm={sumOfKm} />
       <div className="grid grid-cols-2 my-5 mx-10 gap-4">
         {weekDatesWithouYear.map((week, idx) => (
-          <div className="border border-1 border-gray-300 rounded-md p-2 activity-font">
+          <div
+            className="border border-1 border-gray-300 rounded-md p-2 activity-font"
+            key={week.start}
+          >
             <h1 className="flex justify-center mb-4 activity-font">
               {week.start} - {week.end}
             </h1>
