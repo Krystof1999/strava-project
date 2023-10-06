@@ -1,6 +1,6 @@
 export interface WeekDate {
   start: string;
   end: string;
-  startTimeStamp: number;
-  endTimeStamp: number;
+  startTimeStamp?: number;
+  endTimeStamp?: number;
 }

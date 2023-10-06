@@ -38,8 +38,8 @@ const WeekBox = ({
     const dayNames = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
     // Convert timestamps to Luxon DateTime objects
-    let currentDate = DateTime.fromSeconds(startTimestamp);
-    const endDate = DateTime.fromSeconds(endTimestamp);
+    let currentDate = DateTime.fromSeconds(startTimestamp!);
+    const endDate = DateTime.fromSeconds(endTimestamp!);
 
     while (currentDate <= endDate) {
       const formattedDate = currentDate.toFormat("dd.MM.");

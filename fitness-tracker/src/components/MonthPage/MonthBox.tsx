@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { MonthDate } from "../../entities/MonthDate";
+import { WeekDate } from "../../entities/WeekDate";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
@@ -8,9 +9,15 @@ import GroupedActivities from "./GroupedActivities";
 
 interface Props {
   displayMonthDate: MonthDate;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
 }
 
-const MonthBox = ({ displayMonthDate }: Props) => {
+const MonthBox = ({
+  displayMonthDate,
+  setSelectedTab,
+  setDisplayWeekDate,
+}: Props) => {
   const getWeekDatesWithoutYear = (weeks: string) => {
     const luxonObj = DateTime.fromFormat(weeks, "dd.MM.yyyy");
     return `${luxonObj.day}.${luxonObj.month}`;
@@ -44,6 +51,37 @@ const MonthBox = ({ displayMonthDate }: Props) => {
   );
   const endTimeStamp = Math.floor(currentMonthDate.endOf("month").toSeconds());
 
+  const formatDateString = (dateStr: string) => {
+    const luxonObj = DateTime.fromFormat(dateStr, "d.M.yyyy");
+    if (luxonObj.isValid) {
+      return luxonObj.toFormat("dd.MM.yyyy");
+    }
+    // Return the original string if it doesn't match the expected format
+    return dateStr;
+  };
+
+  const handleClick = (
+    startOfTheWeek: string,
+    endOfTheWeek: string,
+    idx: number
+  ) => {
+    setSelectedTab("WEEK");
+
+    const year = DateTime.fromFormat(displayMonthDate.start, "dd.MM.yyyy").year;
+
+    const formattedStart = formatDateString(`${startOfTheWeek}.${year}`);
+    const formattedEnd = formatDateString(`${endOfTheWeek}.${year}`);
+
+    const displayWeekData = {
+      start: formattedStart,
+      end: formattedEnd,
+      startTimeStamp: timeStampsForWeeksInMonth[idx].startTimeStamp,
+      endTimeStamp: timeStampsForWeeksInMonth[idx].endTimeStamp,
+    };
+
+    setDisplayWeekDate(displayWeekData);
+  };
+
   const {
     data: activities,
     isLoading,
@@ -64,6 +102,7 @@ const MonthBox = ({ displayMonthDate }: Props) => {
           <div
             className="border border-1 border-gray-300 rounded-md p-2 activity-font"
             key={week.start}
+            onClick={() => handleClick(week.start, week.end, idx)}
           >
             <h1 className="flex justify-center mb-4 activity-font">
               {week.start} - {week.end}
