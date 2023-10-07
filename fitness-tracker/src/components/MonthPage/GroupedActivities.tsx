@@ -1,6 +1,5 @@
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
-import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
 import {
   getActivityDistanceSum,
@@ -23,7 +22,7 @@ const GroupedActivities = ({ startTimeStamp, endTimeStamp }: Props) => {
 
   if (isLoading) return <MonthBoxSkeleton />;
   if (error) return <EmptyMonthBox />;
-  if (activities.length === 0) return <LazyIcon />;
+  if (activities.length === 0) return "";
 
   const groupActivitiesByType = getGroupActivitiesByType(activities);
   const sumOfKm = getActivityDistanceSum(activities);
