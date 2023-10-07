@@ -128,10 +128,19 @@ const ArrowComponent = ({
       });
     }
     if (selectedTab === "YEAR") {
+      // Calculate timestamps for year view
+      const prevYear = displayYearDate.year - 1;
+      const luxonObj = DateTime.fromObject({ year: prevYear });
+
+      const startTimeStampYear = Math.floor(
+        luxonObj.startOf("year").toSeconds()
+      );
+      const endTimeStampYear = Math.floor(luxonObj.endOf("year").toSeconds());
+
       setDisplayYearDate({
         year: displayYearDate.year - 1,
-        startTimeStamp: 0,
-        endTimeStamp: 0,
+        startTimeStamp: startTimeStampYear,
+        endTimeStamp: endTimeStampYear,
       });
     }
   };
@@ -226,10 +235,19 @@ const ArrowComponent = ({
       });
     }
     if (selectedTab === "YEAR") {
+      // Calculate timestamps for year view
+      const nextYear = displayYearDate.year + 1;
+      const luxonObj = DateTime.fromObject({ year: nextYear });
+
+      const startTimeStampYear = Math.floor(
+        luxonObj.startOf("year").toSeconds()
+      );
+      const endTimeStampYear = Math.floor(luxonObj.endOf("year").toSeconds());
+
       setDisplayYearDate({
         year: displayYearDate.year + 1,
-        startTimeStamp: 0, // todo
-        endTimeStamp: 0,
+        startTimeStamp: startTimeStampYear,
+        endTimeStamp: endTimeStampYear,
       });
     }
   };
