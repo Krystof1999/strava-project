@@ -8,6 +8,7 @@ interface Props {
   displayDayDate: DisplayDayDate;
   displayWeekDate: WeekDate;
   displayMonthDate: MonthDate;
+  displayYearDate: number;
 }
 
 const DateTitle = ({
@@ -15,6 +16,7 @@ const DateTitle = ({
   displayDayDate,
   displayWeekDate,
   displayMonthDate,
+  displayYearDate,
 }: Props) => {
   const parsedWeekStart = DateTime.fromFormat(
     displayWeekDate.start,
@@ -48,6 +50,7 @@ const DateTitle = ({
         `${displayDayDate.day}.${displayDayDate.month}.${displayDayDate.year}`}
       {selectedTab === "WEEK" && `${weekStart} - ${weekEnd}`}
       {selectedTab === "MONTH" && `${displayMonthDate.year} ${monthNameCZ}`}
+      {selectedTab === "YEAR" && `${displayYearDate}`}
     </div>
   );
 };

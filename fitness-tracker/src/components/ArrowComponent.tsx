@@ -15,6 +15,8 @@ interface Props {
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
   displayMonthDate: MonthDate;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
+  displayYearDate: number;
+  setDisplayYearDate: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ArrowComponent = ({
@@ -25,6 +27,8 @@ const ArrowComponent = ({
   setDisplayWeekDate,
   displayMonthDate,
   setDisplayMonthDate,
+  displayYearDate,
+  setDisplayYearDate,
 }: Props) => {
   const year_week = DateTime.fromFormat(
     displayWeekDate.start,
@@ -122,6 +126,9 @@ const ArrowComponent = ({
         weeksInMonth: weeksInMonth,
       });
     }
+    if (selectedTab === "YEAR") {
+      setDisplayYearDate(displayYearDate - 1);
+    }
   };
 
   const handleNext = () => {
@@ -213,6 +220,9 @@ const ArrowComponent = ({
         weeksInMonth: weeksInMonth,
       });
     }
+    if (selectedTab === "YEAR") {
+      setDisplayYearDate(displayYearDate + 1);
+    }
   };
 
   return (
@@ -231,6 +241,7 @@ const ArrowComponent = ({
           displayDayDate={displayDayDate}
           displayWeekDate={displayWeekDate}
           displayMonthDate={displayMonthDate}
+          displayYearDate={displayYearDate}
         />
         <div onClick={handleNext}>
           <MdKeyboardArrowRight size={30} />

@@ -54,6 +54,8 @@ function App() {
     weeksInMonth: weeksInMonth,
   });
 
+  const [displayYearDate, setDisplayYearDate] = useState(startYear);
+
   const [selectedTab, setSelectedTab] = useState("DAY");
 
   return (
@@ -67,6 +69,8 @@ function App() {
         setDisplayWeekDate={setDisplayWeekDate}
         displayMonthDate={displayMonthDate}
         setDisplayMonthDate={setDisplayMonthDate}
+        displayYearDate={displayYearDate}
+        setDisplayYearDate={setDisplayYearDate}
       />
       <ComponentBox
         selectedTab={selectedTab}
