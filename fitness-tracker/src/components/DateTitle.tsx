@@ -2,13 +2,14 @@ import { DateTime } from "luxon";
 import { WeekDate } from "../entities/WeekDate";
 import { DisplayDayDate } from "../entities/DisplayDate";
 import { MonthDate } from "../entities/MonthDate";
+import { YearDate } from "../entities/YearDate";
 
 interface Props {
   selectedTab: string;
   displayDayDate: DisplayDayDate;
   displayWeekDate: WeekDate;
   displayMonthDate: MonthDate;
-  displayYearDate: number;
+  displayYearDate: YearDate;
 }
 
 const DateTitle = ({
@@ -50,7 +51,7 @@ const DateTitle = ({
         `${displayDayDate.day}.${displayDayDate.month}.${displayDayDate.year}`}
       {selectedTab === "WEEK" && `${weekStart} - ${weekEnd}`}
       {selectedTab === "MONTH" && `${displayMonthDate.year} ${monthNameCZ}`}
-      {selectedTab === "YEAR" && `${displayYearDate}`}
+      {selectedTab === "YEAR" && `${displayYearDate.year}`}
     </div>
   );
 };

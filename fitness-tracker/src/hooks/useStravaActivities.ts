@@ -12,18 +12,43 @@ const useStravaActivities = (
   endDateTimestamp?: number
 ) => {
   const fetchActivities = async () => {
-    const stravaAccesToken = await axios.all([
-      axios.post(
-        `${auth_link}?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`
-      ),
-    ]);
-
-    const stravaActivity = await axios.get<Activity[]>(
-      `https://www.strava.com/api/v3/athlete/activities?access_token=${stravaAccesToken[0].data.access_token}`,
-      { params: { after: startDateTimestamp, before: endDateTimestamp } }
+    const stravaAccesToken = await axios.post(
+      `${auth_link}?client_id=${clientID}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`
     );
 
-    return stravaActivity.data;
+    const perPage = 30; // Number of activities per page (default 30)
+    let page = 1; // Initial page
+
+    let allActivities: Activity[] = [];
+
+    const condition = true;
+    while (condition) {
+      const stravaActivity = await axios.get<Activity[]>(
+        `https://www.strava.com/api/v3/athlete/activities`,
+        {
+          params: {
+            access_token: stravaAccesToken.data.access_token,
+            after: startDateTimestamp,
+            before: endDateTimestamp,
+            per_page: perPage,
+            page: page,
+          },
+        }
+      );
+
+      if (stravaActivity.data.length === 0) {
+        // No more activities to fetch, exit the loop
+        break;
+      }
+
+      // Concatenate the new activities to the existing ones
+      allActivities = allActivities.concat(stravaActivity.data);
+
+      // Move to the next page (fetch other activities)
+      page++;
+    }
+
+    return allActivities;
   };
 
   return useQuery<Activity[], Error>({

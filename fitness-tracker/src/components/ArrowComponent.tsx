@@ -6,6 +6,7 @@ import { DisplayDayDate } from "../entities/DisplayDate";
 import { MonthDate } from "../entities/MonthDate";
 import { getWeeksInMonth } from "./utils/dateUtils";
 import { useState } from "react";
+import { YearDate } from "../entities/YearDate";
 
 interface Props {
   selectedTab: string;
@@ -15,8 +16,8 @@ interface Props {
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
   displayMonthDate: MonthDate;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
-  displayYearDate: number;
-  setDisplayYearDate: React.Dispatch<React.SetStateAction<number>>;
+  displayYearDate: YearDate;
+  setDisplayYearDate: React.Dispatch<React.SetStateAction<YearDate>>;
 }
 
 const ArrowComponent = ({
@@ -127,7 +128,11 @@ const ArrowComponent = ({
       });
     }
     if (selectedTab === "YEAR") {
-      setDisplayYearDate(displayYearDate - 1);
+      setDisplayYearDate({
+        year: displayYearDate.year - 1,
+        startTimeStamp: 0,
+        endTimeStamp: 0,
+      });
     }
   };
 
@@ -221,7 +226,11 @@ const ArrowComponent = ({
       });
     }
     if (selectedTab === "YEAR") {
-      setDisplayYearDate(displayYearDate + 1);
+      setDisplayYearDate({
+        year: displayYearDate.year + 1,
+        startTimeStamp: 0, // todo
+        endTimeStamp: 0,
+      });
     }
   };
 

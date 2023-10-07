@@ -3,10 +3,11 @@ import { useState } from "react";
 import ArrowComponent from "./components/ArrowComponent";
 import ComponentBox from "./components/ComponentBox";
 import NavBar from "./components/NavBar";
-import { WeekDate } from "./entities/WeekDate";
+import { getWeeksInMonth } from "./components/utils/dateUtils";
 import { DisplayDayDate } from "./entities/DisplayDate";
 import { MonthDate } from "./entities/MonthDate";
-import { getWeeksInMonth } from "./components/utils/dateUtils";
+import { WeekDate } from "./entities/WeekDate";
+import { YearDate } from "./entities/YearDate";
 
 function App() {
   const todayDate = DateTime.now();
@@ -54,7 +55,15 @@ function App() {
     weeksInMonth: weeksInMonth,
   });
 
-  const [displayYearDate, setDisplayYearDate] = useState(startYear);
+  // Calculate timestamps for year view
+  const startTimeStampYear = Math.floor(todayDate.startOf("year").toSeconds());
+  const endTimeStampYear = Math.floor(todayDate.endOf("year").toSeconds());
+
+  const [displayYearDate, setDisplayYearDate] = useState<YearDate>({
+    year: startYear,
+    startTimeStamp: startTimeStampYear,
+    endTimeStamp: endTimeStampYear,
+  });
 
   const [selectedTab, setSelectedTab] = useState("DAY");
 
@@ -79,6 +88,7 @@ function App() {
         setDisplayDayDate={setDisplayDayDate}
         displayWeekDate={displayWeekDate}
         displayMonthDate={displayMonthDate}
+        displayYearDate={displayYearDate}
         setDisplayWeekDate={setDisplayWeekDate}
       />
     </>

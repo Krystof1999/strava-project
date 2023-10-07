@@ -41,6 +41,7 @@ const DayBox = ({ displayDayDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
+  console.log(activities);
 
   const sumOfKmPerDay = getActivityDistanceSum(activities);
 
