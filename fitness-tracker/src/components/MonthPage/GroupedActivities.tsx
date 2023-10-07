@@ -7,6 +7,7 @@ import {
   getGroupActivitiesByType,
 } from "../utils/activityUtils";
 import EmptyMonthBox from "./EmptyMonthBox";
+import MonthBoxSkeleton from "./MonthBoxSkeleton";
 
 interface Props {
   startTimeStamp: number;
@@ -20,7 +21,7 @@ const GroupedActivities = ({ startTimeStamp, endTimeStamp }: Props) => {
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
 
-  if (isLoading) return <p>loading...</p>; // todo -sceleton
+  if (isLoading) return <MonthBoxSkeleton />;
   if (error) return <EmptyMonthBox />;
   if (activities.length === 0) return <LazyIcon />;
 

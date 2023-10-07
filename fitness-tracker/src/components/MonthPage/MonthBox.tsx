@@ -90,7 +90,7 @@ const MonthBox = ({
 
   const sumOfKm = getActivityDistanceSum(activities);
 
-  if (isLoading) return <p>loading...</p>; // todo -sceleton
+  if (isLoading) return "";
   if (error) return "";
   if (activities.length === 0) return <LazyIcon />;
 
