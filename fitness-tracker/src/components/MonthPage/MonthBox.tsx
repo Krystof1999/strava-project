@@ -91,7 +91,12 @@ const MonthBox = ({
   const sumOfKm = getActivityDistanceSum(activities);
 
   if (isLoading) return "";
-  if (error) return "";
+  if (error)
+    return (
+      <div className="rounded-md flex justify-center ">
+        <LazyIcon />
+      </div>
+    );
   if (activities.length === 0) return <LazyIcon />;
 
   return (
