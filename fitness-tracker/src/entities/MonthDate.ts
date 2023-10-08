@@ -1,4 +1,4 @@
-interface WeekDays {
+export interface WeekDays {
   start: string;
   end: string;
 }

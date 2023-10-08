@@ -91,3 +91,5 @@ const YearBox = ({ displayYearDate }: Props) => {
 };
 
 export default YearBox;
+
+//TODO - kliknuti na detail
