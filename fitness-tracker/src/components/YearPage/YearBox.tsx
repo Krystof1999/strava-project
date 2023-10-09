@@ -67,7 +67,7 @@ const YearBox = ({ displayYearDate }: Props) => {
       <SumDistance sumsOfKm={sumOfkmPerYear} />
       {monthlySumArray.map((month) => (
         <div
-          className={`my-2 mx-10 py-3 border border-1 rounded-md flex justify-between pl-2 pr-2 activity-font ${
+          className={`my-2 mx-10 py-3 h-[56px] border border-1 rounded-md flex justify-between pl-2 pr-2 activity-font ${
             month.sum === "0"
               ? "border-gray-100 text-gray-200"
               : "border-gray-300 "
