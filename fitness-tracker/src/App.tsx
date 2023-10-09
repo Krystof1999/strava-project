@@ -90,6 +90,7 @@ function App() {
         displayMonthDate={displayMonthDate}
         displayYearDate={displayYearDate}
         setDisplayWeekDate={setDisplayWeekDate}
+        setDisplayMonthDate={setDisplayMonthDate}
       />
     </>
   );

@@ -5,12 +5,20 @@ import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
 import LazyIcon from "../LazyIcon";
 import YearBoxSkeleton from "./YearBoxSkeleton";
+import { getWeeksInMonth } from "../utils/dateUtils";
+import { MonthDate } from "../../entities/MonthDate";
 
 interface Props {
   displayYearDate: YearDate;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
-const YearBox = ({ displayYearDate }: Props) => {
+const YearBox = ({
+  displayYearDate,
+  setSelectedTab,
+  setDisplayMonthDate,
+}: Props) => {
   const {
     data: yearActivities,
     isLoading,
@@ -19,19 +27,20 @@ const YearBox = ({ displayYearDate }: Props) => {
     displayYearDate.startTimeStamp,
     displayYearDate.endTimeStamp
   );
+
   const monthsInYear = [
-    "Leden",
-    "Únor",
-    "Březen",
-    "Duben",
-    "Květen",
-    "Červen",
-    "Červenec",
-    "Srpen",
-    "Září",
-    "Říjen",
-    "Listopad",
-    "Prosinec",
+    { number: 1, name: "Leden", engName: "January" },
+    { number: 2, name: "Únor", engName: "February" },
+    { number: 3, name: "Březen", engName: "March" },
+    { number: 4, name: "Duben", engName: "April" },
+    { number: 5, name: "Květen", engName: "May" },
+    { number: 6, name: "Červen", engName: "June" },
+    { number: 7, name: "Červenec", engName: "July" },
+    { number: 8, name: "Srpen", engName: "August" },
+    { number: 9, name: "Září", engName: "September" },
+    { number: 10, name: "Říjen", engName: "October" },
+    { number: 11, name: "Listopad", engName: "November" },
+    { number: 12, name: "Prosinec", engName: "December" },
   ];
 
   const sumOfkmPerYear = getActivityDistanceSum(yearActivities);
@@ -59,6 +68,30 @@ const YearBox = ({ displayYearDate }: Props) => {
 
   const monthlySumArray = calculateDistancesPerMonth();
 
+  const handleClick = (month: {
+    name: string;
+    number: number;
+    engName: string;
+  }) => {
+    setSelectedTab("MONTH");
+
+    console.log(month);
+    const weeksInMonth = getWeeksInMonth(displayYearDate.year, month.number);
+    const start = weeksInMonth[0].start;
+    const end = weeksInMonth[weeksInMonth.length - 1].end;
+
+    const displayMonthData: MonthDate = {
+      start: start,
+      end: end,
+      monthName: month.engName,
+      month: month.number,
+      year: displayYearDate.year,
+      weeksInMonth: weeksInMonth,
+    };
+
+    setDisplayMonthDate(displayMonthData);
+  };
+
   if (isLoading) return <YearBoxSkeleton />;
   if (error) return <LazyIcon />;
 
@@ -72,9 +105,10 @@ const YearBox = ({ displayYearDate }: Props) => {
               ? "border-gray-100 text-gray-200"
               : "border-gray-300 "
           }`}
-          key={month.month}
+          key={month.month.name}
+          onClick={() => handleClick(month.month)}
         >
-          <h1>{month.month}</h1>
+          <h1>{month.month.name}</h1>
           {month.sum === "0" ? (
             <h1 className="text-gray-200">
               {month.sum} <span className="text-gray-200">km</span>
@@ -91,5 +125,3 @@ const YearBox = ({ displayYearDate }: Props) => {
 };
 
 export default YearBox;
-
-//TODO - kliknuti na detail

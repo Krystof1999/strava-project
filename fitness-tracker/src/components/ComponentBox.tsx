@@ -16,6 +16,7 @@ interface Props {
   displayMonthDate: MonthDate;
   displayYearDate: YearDate;
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
+  setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
 const ComponentBox = ({
@@ -27,6 +28,7 @@ const ComponentBox = ({
   displayMonthDate,
   displayYearDate,
   setDisplayWeekDate,
+  setDisplayMonthDate,
 }: Props) => {
   return (
     <div>
@@ -46,7 +48,13 @@ const ComponentBox = ({
         />
       )}
 
-      {selectedTab === "YEAR" && <YearBox displayYearDate={displayYearDate} />}
+      {selectedTab === "YEAR" && (
+        <YearBox
+          displayYearDate={displayYearDate}
+          setSelectedTab={setSelectedTab}
+          setDisplayMonthDate={setDisplayMonthDate}
+        />
+      )}
     </div>
   );
 };
