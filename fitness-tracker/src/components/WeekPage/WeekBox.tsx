@@ -145,10 +145,10 @@ const WeekBox = ({
           ${
             !isNaN(distanceByEachDay[day.date])
               ? ""
-              : "border-gray-100 text-gray-200 "
+              : "border-gray-100 text-gray-200 h-[56px]"
           }`}
         >
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <p>{day.day}</p>
             <p>{day.date}</p>
 
