@@ -51,8 +51,9 @@ const DayBox = ({ displayDayDate }: Props) => {
 
   return (
     <>
-      <SumDistance sumsOfKm={sumOfKmPerDay} />
-
+      <div className="mt-4">
+        <SumDistance sumsOfKm={sumOfKmPerDay} />
+      </div>
       {activities?.map((activity) => (
         <div
           className=" my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"

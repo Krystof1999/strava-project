@@ -156,9 +156,19 @@ const MonthBox = ({
     setDisplayWeekDate(displayWeekData);
   };
 
+  const weekActivitiesDistances = weekActivities.map((week) =>
+    week.sportTypeDistances.map((activity) => activity.distance)
+  );
+
+  const weekActivitiesDistancesSum = weekActivitiesDistances.map((element) => {
+    return (element.reduce((acc, curr) => acc + curr, 0) / 1000).toFixed(0);
+  });
+
   return (
     <>
-      <SumDistance sumsOfKm={sumOfMonthKm} />
+      <div className="mt-4">
+        <SumDistance sumsOfKm={sumOfMonthKm} />
+      </div>
       <div className="grid grid-cols-2 my-5 mx-10 gap-4">
         {weekActivities.map((week, idx) =>
           week.activities.length === 0 ? (
@@ -169,9 +179,16 @@ const MonthBox = ({
               key={week.start}
               onClick={() => handleClick(week.start, week.end, idx)}
             >
-              <h1 className="flex justify-center mb-4 activity-font">
+              <h1 className="flex justify-center activity-font">
                 {week.start} - {week.end}
               </h1>
+
+              <div className="mb-6 mt-2">
+                <SumDistance
+                  sumsOfKm={weekActivitiesDistancesSum[idx].toString()}
+                  key={week.start}
+                />
+              </div>
 
               <div className="flex flex-col gap-3">
                 {week.sportTypeDistances.map((activity) => (

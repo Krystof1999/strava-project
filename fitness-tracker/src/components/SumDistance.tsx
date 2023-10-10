@@ -4,7 +4,7 @@ interface Props {
 
 const SumDistance = ({ sumsOfKm }: Props) => {
   return (
-    <h1 className="activity-font flex justify-center mt-4">
+    <h1 className="activity-font flex justify-center ">
       Celkem:<span className="text-[#F68C29] mx-1">{sumsOfKm}</span>km
     </h1>
   );

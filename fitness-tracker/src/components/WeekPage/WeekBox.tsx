@@ -135,8 +135,9 @@ const WeekBox = ({
 
   return (
     <>
-      <SumDistance sumsOfKm={sumOfKmPerWeek} />
-
+      <div className="mt-4">
+        <SumDistance sumsOfKm={sumOfKmPerWeek} />
+      </div>
       {daysInWeek.map((day) => (
         <div
           onClick={() => handleDayClick(day.date)}

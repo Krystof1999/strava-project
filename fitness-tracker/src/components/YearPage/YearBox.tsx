@@ -97,7 +97,9 @@ const YearBox = ({
 
   return (
     <>
-      <SumDistance sumsOfKm={sumOfkmPerYear} />
+      <div className="mt-4">
+        <SumDistance sumsOfKm={sumOfkmPerYear} />
+      </div>
       {monthlySumArray.map((month) => (
         <div
           className={`my-2 mx-10 py-3 h-[56px] border border-1 rounded-md flex justify-between pl-2 pr-2 activity-font ${
