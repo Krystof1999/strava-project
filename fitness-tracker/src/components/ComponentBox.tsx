@@ -47,7 +47,6 @@ const ComponentBox = ({
           setDisplayWeekDate={setDisplayWeekDate}
         />
       )}
-
       {selectedTab === "YEAR" && (
         <YearBox
           displayYearDate={displayYearDate}

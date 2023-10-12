@@ -7,6 +7,9 @@ import DayBoxSkeleton from "./DayBoxSkeleton";
 import { DisplayDayDate } from "../../entities/DisplayDate";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
+import Map from "../Map";
+import polyline from "@mapbox/polyline";
+import { LatLngExpression } from "leaflet";
 
 interface Props {
   displayDayDate: DisplayDayDate;
@@ -41,13 +44,24 @@ const DayBox = ({ displayDayDate }: Props) => {
     isLoading,
     error,
   } = useStravaActivities(startTimeStamp, endTimeStamp);
-  console.log(activities);
 
   const sumOfKmPerDay = getActivityDistanceSum(activities);
 
   if (isLoading) return <DayBoxSkeleton />;
   if (error) return <p>{error.message}</p>;
   if (activities.length === 0) return <LazyIcon />;
+
+  const mapPolylines: LatLngExpression[][] = [];
+  for (let i = 0; i < activities!.length; i += 1) {
+    const activity_polyline = activities?.map((a) => a.map.summary_polyline)[i];
+
+    const decodedMapPolyline = polyline.decode(
+      activity_polyline
+    ) as LatLngExpression[];
+
+    mapPolylines.push(decodedMapPolyline);
+  }
+  console.log(mapPolylines);
 
   return (
     <>
@@ -68,6 +82,10 @@ const DayBox = ({ displayDayDate }: Props) => {
           <div className="mt-10 pl-5">
             <DayActivityProperty activity={activity} />
           </div>
+          <Map
+            coordinates={{ lat: 50.1039, lng: 14.43564 }}
+            mapPolylines={mapPolylines}
+          />
         </div>
       ))}
     </>
