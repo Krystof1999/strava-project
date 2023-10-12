@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Polyline, useMap } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 
+import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { LatLngExpression } from "leaflet";
 
 export interface coordinatesType {
   lat: number;
@@ -26,8 +26,6 @@ const Map = ({ coordinates, mapPolylines }: Props) => {
     return null;
   };
 
-  const limeOptions = { color: "lime" };
-
   return (
     <MapContainer
       center={[coordinates.lat, coordinates.lng]}
@@ -41,8 +39,7 @@ const Map = ({ coordinates, mapPolylines }: Props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <Polyline pathOptions={limeOptions} positions={mapPolylines} />
-
+      <Polyline pathOptions={{ color: "blue" }} positions={mapPolylines} />
       <MapUpdater />
     </MapContainer>
   );

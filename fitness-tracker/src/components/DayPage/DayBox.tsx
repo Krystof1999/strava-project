@@ -7,7 +7,7 @@ import DayBoxSkeleton from "./DayBoxSkeleton";
 import { DisplayDayDate } from "../../entities/DisplayDate";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
-import Map from "../Map";
+import Map, { coordinatesType } from "../Map";
 import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
 
@@ -51,17 +51,32 @@ const DayBox = ({ displayDayDate }: Props) => {
   if (error) return <p>{error.message}</p>;
   if (activities.length === 0) return <LazyIcon />;
 
-  const mapPolylines: LatLngExpression[][] = [];
-  for (let i = 0; i < activities!.length; i += 1) {
-    const activity_polyline = activities?.map((a) => a.map.summary_polyline)[i];
-
+  const mapPolylines: LatLngExpression[][] = activities.map((activity) => {
+    const activity_polyline = activity.map.summary_polyline;
     const decodedMapPolyline = polyline.decode(
       activity_polyline
     ) as LatLngExpression[];
+    return decodedMapPolyline;
+  });
 
-    mapPolylines.push(decodedMapPolyline);
+  // Calculate the center of the polyline coordinates
+  function calculateCenter(
+    mapPolylines: LatLngExpression[][]
+  ): coordinatesType {
+    const latitudes = mapPolylines.flatMap((polyline) =>
+      polyline.map((point) => (point as number[])[0])
+    );
+    const longitudes = mapPolylines.flatMap((polyline) =>
+      polyline.map((point) => (point as number[])[1])
+    );
+
+    const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
+    const centerLng = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
+
+    return { lat: centerLat, lng: centerLng };
   }
-  console.log(mapPolylines);
+
+  const initialCoordinates = calculateCenter(mapPolylines);
 
   return (
     <>
@@ -82,10 +97,19 @@ const DayBox = ({ displayDayDate }: Props) => {
           <div className="mt-10 pl-5">
             <DayActivityProperty activity={activity} />
           </div>
-          <Map
-            coordinates={{ lat: 50.1039, lng: 14.43564 }}
-            mapPolylines={mapPolylines}
-          />
+          {activities.map(
+            (a) =>
+              a.map.summary_polyline && (
+                <Map
+                  key={a.name}
+                  coordinates={{
+                    lat: initialCoordinates.lat,
+                    lng: initialCoordinates.lng,
+                  }}
+                  mapPolylines={mapPolylines}
+                />
+              )
+          )}
         </div>
       ))}
     </>
