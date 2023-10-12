@@ -1,15 +1,15 @@
-import { DateTime } from "luxon";
-import useStravaActivities from "../../hooks/useStravaActivities";
-import ActivityIcon from "../ActivityIcon";
-import DayActivityProperty from "./DayActivityProperty";
-import LazyIcon from "../LazyIcon";
-import DayBoxSkeleton from "./DayBoxSkeleton";
-import { DisplayDayDate } from "../../entities/DisplayDate";
-import SumDistance from "../SumDistance";
-import { getActivityDistanceSum } from "../utils/activityUtils";
-import Map, { coordinatesType } from "../Map";
 import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
+import { DateTime } from "luxon";
+import { DisplayDayDate } from "../../entities/DisplayDate";
+import useStravaActivities from "../../hooks/useStravaActivities";
+import ActivityIcon from "../ActivityIcon";
+import LazyIcon from "../LazyIcon";
+import Map, { coordinatesType } from "../Map";
+import SumDistance from "../SumDistance";
+import { getActivityDistanceSum } from "../utils/activityUtils";
+import DayActivityProperty from "./DayActivityProperty";
+import DayBoxSkeleton from "./DayBoxSkeleton";
 
 interface Props {
   displayDayDate: DisplayDayDate;
@@ -60,30 +60,31 @@ const DayBox = ({ displayDayDate }: Props) => {
   });
 
   // Calculate the center of the polyline coordinates
-  function calculateCenter(
+  function calculateCenterOfTheMapView(
     mapPolylines: LatLngExpression[][]
-  ): coordinatesType {
-    const latitudes = mapPolylines.flatMap((polyline) =>
-      polyline.map((point) => (point as number[])[0])
-    );
-    const longitudes = mapPolylines.flatMap((polyline) =>
-      polyline.map((point) => (point as number[])[1])
-    );
+  ): coordinatesType[] {
+    return mapPolylines.map((polyline) => {
+      const latitudes = polyline.map((point) => (point as number[])[0]);
+      const longitudes = polyline.map((point) => (point as number[])[1]);
 
-    const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
-    const centerLng = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
+      const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
+      const centerLng = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
 
-    return { lat: centerLat, lng: centerLng };
+      return {
+        lat: isNaN(centerLat) ? 0 : centerLat,
+        lng: isNaN(centerLng) ? 0 : centerLng,
+      };
+    });
   }
 
-  const initialCoordinates = calculateCenter(mapPolylines);
+  const centerMapView = calculateCenterOfTheMapView(mapPolylines);
 
   return (
     <>
       <div className="mt-4">
         <SumDistance sumsOfKm={sumOfKmPerDay} />
       </div>
-      {activities?.map((activity) => (
+      {activities?.map((activity, idx) => (
         <div
           className=" my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
           key={activity.name}
@@ -97,18 +98,16 @@ const DayBox = ({ displayDayDate }: Props) => {
           <div className="mt-10 pl-5">
             <DayActivityProperty activity={activity} />
           </div>
-          {activities.map(
-            (a) =>
-              a.map.summary_polyline && (
-                <Map
-                  key={a.name}
-                  coordinates={{
-                    lat: initialCoordinates.lat,
-                    lng: initialCoordinates.lng,
-                  }}
-                  mapPolylines={mapPolylines}
-                />
-              )
+          {centerMapView[idx].lat !== 0 || centerMapView[idx].lng !== 0 ? (
+            <Map
+              coordinates={{
+                lat: centerMapView[idx].lat,
+                lng: centerMapView[idx].lng,
+              }}
+              mapPolylines={mapPolylines}
+            />
+          ) : (
+            ""
           )}
         </div>
       ))}
