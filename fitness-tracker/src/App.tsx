@@ -8,6 +8,9 @@ import { DisplayDayDate } from "./entities/DisplayDate";
 import { MonthDate } from "./entities/MonthDate";
 import { WeekDate } from "./entities/WeekDate";
 import { YearDate } from "./entities/YearDate";
+import Map from "./components/Map";
+
+document.body.style.overflow = "hidden"; // make the page not-scrollable
 
 function App() {
   const todayDate = DateTime.now();
@@ -92,6 +95,9 @@ function App() {
         setDisplayWeekDate={setDisplayWeekDate}
         setDisplayMonthDate={setDisplayMonthDate}
       />
+      {/* <div id="map-section" className=" w-full h-screen"> */}
+      <Map coordinates={{ lat: 50.1039, lng: 14.43564 }} />
+      {/* </div> */}
     </>
   );
 }
