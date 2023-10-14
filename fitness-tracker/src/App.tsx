@@ -8,6 +8,7 @@ import { DisplayDayDate } from "./entities/DisplayDate";
 import { MonthDate } from "./entities/MonthDate";
 import { WeekDate } from "./entities/WeekDate";
 import { YearDate } from "./entities/YearDate";
+import MapFull from "./components/MapFull";
 
 function App() {
   const todayDate = DateTime.now();
@@ -67,9 +68,11 @@ function App() {
 
   const [selectedTab, setSelectedTab] = useState("DAY");
 
+  const mapPolylines = [[0, 0]];
+
   return (
     <>
-      <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
+      {/* <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
       <ArrowComponent
         selectedTab={selectedTab}
         displayDayDate={displayDayDate}
@@ -91,6 +94,10 @@ function App() {
         displayYearDate={displayYearDate}
         setDisplayWeekDate={setDisplayWeekDate}
         setDisplayMonthDate={setDisplayMonthDate}
+      /> */}
+      <MapFull
+        coordinates={{ lat: 50.7902, lng: 15.075354999999998 }}
+        mapPolylines={mapPolylines}
       />
     </>
   );
