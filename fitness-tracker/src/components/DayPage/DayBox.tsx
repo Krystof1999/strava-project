@@ -98,6 +98,7 @@ const DayBox = ({ displayDayDate }: Props) => {
           <div className="mt-10 pl-5">
             <DayActivityProperty activity={activity} />
           </div>
+
           {centerMapView[idx].lat !== 0 || centerMapView[idx].lng !== 0 ? (
             <Map
               coordinates={{
