@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { Polyline, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 
-import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
 
@@ -13,10 +12,9 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-  mapPolylines: LatLngExpression[][];
 }
 
-const MapFull = ({ coordinates, mapPolylines }: Props) => {
+const MapFull = ({ coordinates }: Props) => {
   const MapUpdater = () => {
     const map = useMap();
     useEffect(() => {
@@ -44,7 +42,6 @@ const MapFull = ({ coordinates, mapPolylines }: Props) => {
           attribution='&copy; <a href="https://www.jawg.io/">Jawg</a>'
         />
 
-        <Polyline pathOptions={{ color: "blue" }} positions={mapPolylines} />
         <MapUpdater />
       </MapContainer>
     </div>
