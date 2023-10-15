@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Polyline, useMap } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 
-import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
 
@@ -13,10 +12,19 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-  mapPolylines: LatLngExpression[][];
+  mapPolylines: number[][];
+  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
+  setFullMapPolylines: React.Dispatch<React.SetStateAction<number[][]>>;
+  setFullMapCoordinates: React.Dispatch<React.SetStateAction<coordinatesType>>;
 }
 
-const Map = ({ coordinates, mapPolylines }: Props) => {
+const Map = ({
+  coordinates,
+  mapPolylines,
+  setFullMap,
+  setFullMapPolylines,
+  setFullMapCoordinates,
+}: Props) => {
   const MapUpdater = () => {
     const map = useMap();
     useEffect(() => {
@@ -27,11 +35,11 @@ const Map = ({ coordinates, mapPolylines }: Props) => {
   };
 
   const handleClick = () => {
-    console.log("sd");
+    // console.log(mapPolylines);
+    setFullMapPolylines(mapPolylines);
+    setFullMapCoordinates(coordinates);
+    setFullMap(true);
   };
-
-  console.log(mapPolylines);
-  console.log(coordinates);
 
   return (
     <div onClick={() => handleClick()}>
@@ -39,24 +47,9 @@ const Map = ({ coordinates, mapPolylines }: Props) => {
         center={[coordinates.lat, coordinates.lng]}
         zoom={13}
         scrollWheelZoom={true}
-        id="map"
+        className="map"
         zoomControl={false}
       >
-        {/* smooth dark */}
-        {/* <TileLayer
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
-      /> */}
-
-        {/* default */}
-        {/* <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      /> */}
-        {/* <TileLayer
-        url="https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-        attribution='&copy; <a href="https://www.esri.com/">Esri</a>'
-      /> */}
         <TileLayer
           url="https://tile.jawg.io/jawg-terrain/{z}/{x}/{y}.png?access-token=YBi9f27w4DIZfxr4OHJfg1MQSCeQerLL8fh0e9ZuVLBWciU2pFOzXcFzgWVdWk1v"
           attribution='&copy; <a href="https://www.jawg.io/">Jawg</a>'

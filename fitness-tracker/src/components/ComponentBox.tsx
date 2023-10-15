@@ -17,6 +17,8 @@ interface Props {
   displayYearDate: YearDate;
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
+  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
+  fullMap: boolean;
 }
 
 const ComponentBox = ({
@@ -29,10 +31,18 @@ const ComponentBox = ({
   displayYearDate,
   setDisplayWeekDate,
   setDisplayMonthDate,
+  fullMap,
+  setFullMap,
 }: Props) => {
   return (
     <div>
-      {selectedTab === "DAY" && <DayBox displayDayDate={displayDayDate} />}
+      {selectedTab === "DAY" && (
+        <DayBox
+          displayDayDate={displayDayDate}
+          fullMap={fullMap}
+          setFullMap={setFullMap}
+        />
+      )}
       {selectedTab === "WEEK" && (
         <WeekBox
           displayWeekDate={displayWeekDate}
