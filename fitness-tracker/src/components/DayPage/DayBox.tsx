@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
 import { DateTime } from "luxon";
@@ -20,7 +21,8 @@ interface Props {
 }
 
 const DayBox = ({ displayDayDate, fullMap, setFullMap }: Props) => {
-  const [fullMapPolylines, setFullMapPolylines] = useState([[0, 0]]);
+  // const [fullMapPolylines, setFullMapPolylines] = useState([[0, 0]]);
+  const [fullMapPolylines, setFullMapPolylines] = useState<any>([[0, 0]]);
   const [fullMapCoordinates, setFullMapCoordinates] = useState<coordinatesType>(
     {} as coordinatesType
   );
@@ -69,12 +71,10 @@ const DayBox = ({ displayDayDate, fullMap, setFullMap }: Props) => {
   });
 
   // Calculate the center of the polyline coordinates
-  function calculateCenterOfTheMapView(
-    mapPolylines: LatLngExpression[][]
-  ): coordinatesType[] {
-    return mapPolylines.map((polyline) => {
-      const latitudes = polyline.map((point) => (point as number[])[0]);
-      const longitudes = polyline.map((point) => (point as number[])[1]);
+  function calculateCenterOfTheMapView(mapPolylines: any): coordinatesType[] {
+    return mapPolylines.map((polyline: any) => {
+      const latitudes = polyline.map((point: any) => (point as number[])[0]);
+      const longitudes = polyline.map((point: any) => (point as number[])[1]);
 
       const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
       const centerLng = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;

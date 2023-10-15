@@ -12,7 +12,8 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-  mapPolylines: number[][];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mapPolylines: any;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
   setFullMapPolylines: React.Dispatch<React.SetStateAction<number[][]>>;
   setFullMapCoordinates: React.Dispatch<React.SetStateAction<coordinatesType>>;
