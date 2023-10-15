@@ -2,27 +2,21 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { DisplayDayDate } from "../entities/DisplayDate";
-import { MonthDate } from "../entities/MonthDate";
 import DateTitle from "./DateTitle";
 import useDayContext from "./DayPage/useDayContext";
+import useMonthContext from "./MonthPage/useMonthContext";
 import useWeekContext from "./WeekPage/useWeekContext";
 import useYearContext from "./YearPage/useYearContext";
 import { getWeeksInMonth } from "./utils/dateUtils";
 
 interface Props {
   selectedTab: string;
-  displayMonthDate: MonthDate;
-  setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
-const ArrowComponent = ({
-  selectedTab,
-  displayMonthDate,
-  setDisplayMonthDate,
-}: Props) => {
+const ArrowComponent = ({ selectedTab }: Props) => {
   const { displayDayDate, setDisplayDayDate } = useDayContext();
   const { displayWeekDate, setDisplayWeekDate } = useWeekContext();
-
+  const { displayMonthDate, setDisplayMonthDate } = useMonthContext();
   const { displayYearDate, setDisplayYearDate } = useYearContext();
 
   const year_week = DateTime.fromFormat(

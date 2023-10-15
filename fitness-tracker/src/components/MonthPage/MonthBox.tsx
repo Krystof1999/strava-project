@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import { MonthDate } from "../../entities/MonthDate";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
@@ -8,14 +7,15 @@ import { getActivityDistanceSum } from "../utils/activityUtils";
 import EmptyMonthBox from "./EmptyMonthBox";
 import MonthBoxSkeleton from "./MonthBoxSkeleton";
 import WeekActivities from "./WeekActivities";
+import useMonthContext from "./useMonthContext";
 
 interface Props {
-  displayMonthDate: MonthDate;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MonthBox = ({ displayMonthDate, setSelectedTab }: Props) => {
+const MonthBox = ({ setSelectedTab }: Props) => {
   const { setDisplayWeekDate } = useWeekContext();
+  const { displayMonthDate } = useMonthContext();
 
   const startTimeStamp = Math.floor(
     DateTime.fromFormat(displayMonthDate.start, "dd.MM.yyyy").toSeconds()

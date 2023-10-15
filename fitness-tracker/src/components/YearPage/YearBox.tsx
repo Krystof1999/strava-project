@@ -7,13 +7,14 @@ import { getActivityDistanceSum } from "../utils/activityUtils";
 import { getWeeksInMonth } from "../utils/dateUtils";
 import YearBoxSkeleton from "./YearBoxSkeleton";
 import useYearContext from "./useYearContext";
+import useMonthContext from "../MonthPage/useMonthContext";
 
 interface Props {
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
-const YearBox = ({ setSelectedTab, setDisplayMonthDate }: Props) => {
+const YearBox = ({ setSelectedTab }: Props) => {
+  const { setDisplayMonthDate } = useMonthContext();
   const { displayYearDate } = useYearContext();
 
   const {
