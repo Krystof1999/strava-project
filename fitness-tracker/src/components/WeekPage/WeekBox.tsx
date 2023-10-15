@@ -1,25 +1,27 @@
 import { DateTime } from "luxon";
-import { WeekDate } from "../../entities/WeekDate";
-import useStravaActivities from "../../hooks/useStravaActivities";
-import LazyIcon from "../LazyIcon";
 import { Activity } from "../../entities/Activity";
+import { WeekDate } from "../../entities/WeekDate";
+import useDayContext from "../../hooks/useDayContext";
+import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
-import WeekBoxSkeleton from "./WeekBoxSkeleton";
-import { DisplayDayDate } from "../../entities/DisplayDate";
+import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
+import WeekBoxSkeleton from "./WeekBoxSkeleton";
 
 interface Props {
   displayWeekDate: WeekDate;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
+  // setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
 }
 
 const WeekBox = ({
   displayWeekDate,
   setSelectedTab,
-  setDisplayDayDate,
-}: Props) => {
+}: // setDisplayDayDate,
+Props) => {
+  const { setDisplayDayDate } = useDayContext();
+
   const {
     data: activities,
     isLoading,

@@ -7,11 +7,12 @@ import { MonthDate } from "../entities/MonthDate";
 import { getWeeksInMonth } from "./utils/dateUtils";
 import { useState } from "react";
 import { YearDate } from "../entities/YearDate";
+import useDayContext from "../hooks/useDayContext";
 
 interface Props {
   selectedTab: string;
-  displayDayDate: DisplayDayDate;
-  setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
+  // displayDayDate: DisplayDayDate;
+  // setDisplayDayDate: React.Dispatch<React.SetStateAction<DisplayDayDate>>;
   displayWeekDate: WeekDate;
   setDisplayWeekDate: React.Dispatch<React.SetStateAction<WeekDate>>;
   displayMonthDate: MonthDate;
@@ -22,8 +23,8 @@ interface Props {
 
 const ArrowComponent = ({
   selectedTab,
-  displayDayDate,
-  setDisplayDayDate,
+  // displayDayDate,
+  // setDisplayDayDate,
   displayWeekDate,
   setDisplayWeekDate,
   displayMonthDate,
@@ -31,6 +32,8 @@ const ArrowComponent = ({
   displayYearDate,
   setDisplayYearDate,
 }: Props) => {
+  const { displayDayDate, setDisplayDayDate } = useDayContext();
+
   const year_week = DateTime.fromFormat(
     displayWeekDate.start,
     "dd.MM.yyyy"

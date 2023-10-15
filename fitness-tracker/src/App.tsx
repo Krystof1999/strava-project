@@ -2,9 +2,9 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 import ArrowComponent from "./components/ArrowComponent";
 import ComponentBox from "./components/ComponentBox";
+import DayProvider from "./components/DayProvider";
 import NavBar from "./components/NavBar";
 import { getWeeksInMonth } from "./components/utils/dateUtils";
-import { DisplayDayDate } from "./entities/DisplayDate";
 import { MonthDate } from "./entities/MonthDate";
 import { WeekDate } from "./entities/WeekDate";
 import { YearDate } from "./entities/YearDate";
@@ -12,15 +12,15 @@ import { YearDate } from "./entities/YearDate";
 function App() {
   const todayDate = DateTime.now();
 
-  const startDay = todayDate.day;
+  // const startDay = todayDate.day;
   const startMonth = todayDate.month;
   const startYear = todayDate.year;
 
-  const [displayDayDate, setDisplayDayDate] = useState<DisplayDayDate>({
-    day: startDay,
-    month: startMonth,
-    year: startYear,
-  });
+  // const [displayDayDate, setDisplayDayDate] = useState<DisplayDayDate>({
+  //   day: startDay,
+  //   month: startMonth,
+  //   year: startYear,
+  // });
 
   const startOfWeek = todayDate.startOf("week");
   const endOfWeek = todayDate.endOf("week");
@@ -71,38 +71,40 @@ function App() {
 
   return (
     <>
-      {!fullMap ? (
-        <>
-          <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
-          <ArrowComponent
-            selectedTab={selectedTab}
-            displayDayDate={displayDayDate}
-            setDisplayDayDate={setDisplayDayDate}
-            displayWeekDate={displayWeekDate}
-            setDisplayWeekDate={setDisplayWeekDate}
-            displayMonthDate={displayMonthDate}
-            setDisplayMonthDate={setDisplayMonthDate}
-            displayYearDate={displayYearDate}
-            setDisplayYearDate={setDisplayYearDate}
-          />
-        </>
-      ) : (
-        ""
-      )}
+      <DayProvider>
+        {!fullMap ? (
+          <>
+            <NavBar setSelectedTab={setSelectedTab} selectedTab={selectedTab} />
+            <ArrowComponent
+              selectedTab={selectedTab}
+              // displayDayDate={displayDayDate}
+              // setDisplayDayDate={setDisplayDayDate}
+              displayWeekDate={displayWeekDate}
+              setDisplayWeekDate={setDisplayWeekDate}
+              displayMonthDate={displayMonthDate}
+              setDisplayMonthDate={setDisplayMonthDate}
+              displayYearDate={displayYearDate}
+              setDisplayYearDate={setDisplayYearDate}
+            />
+          </>
+        ) : (
+          ""
+        )}
 
-      <ComponentBox
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        displayDayDate={displayDayDate}
-        setDisplayDayDate={setDisplayDayDate}
-        displayWeekDate={displayWeekDate}
-        displayMonthDate={displayMonthDate}
-        displayYearDate={displayYearDate}
-        setDisplayWeekDate={setDisplayWeekDate}
-        setDisplayMonthDate={setDisplayMonthDate}
-        fullMap={fullMap}
-        setFullMap={setFullMap}
-      />
+        <ComponentBox
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          // displayDayDate={displayDayDate}
+          // setDisplayDayDate={setDisplayDayDate}
+          displayWeekDate={displayWeekDate}
+          displayMonthDate={displayMonthDate}
+          displayYearDate={displayYearDate}
+          setDisplayWeekDate={setDisplayWeekDate}
+          setDisplayMonthDate={setDisplayMonthDate}
+          fullMap={fullMap}
+          setFullMap={setFullMap}
+        />
+      </DayProvider>
     </>
   );
 }

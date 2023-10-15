@@ -2,26 +2,27 @@
 import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
 import { DateTime } from "luxon";
-import { DisplayDayDate } from "../../entities/DisplayDate";
+import { useState } from "react";
+import useDayContext from "../../hooks/useDayContext";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
+import FullMap from "../FullMap";
 import LazyIcon from "../LazyIcon";
 import Map, { coordinatesType } from "../Map";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
 import DayActivityProperty from "./DayActivityProperty";
 import DayBoxSkeleton from "./DayBoxSkeleton";
-import FullMap from "../FullMap";
-import { useState } from "react";
 
 interface Props {
-  displayDayDate: DisplayDayDate;
+  // displayDayDate: DisplayDayDate;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
   fullMap: boolean;
 }
 
-const DayBox = ({ displayDayDate, fullMap, setFullMap }: Props) => {
-  // const [fullMapPolylines, setFullMapPolylines] = useState([[0, 0]]);
+const DayBox = ({ fullMap, setFullMap }: Props) => {
+  const { displayDayDate } = useDayContext();
+
   const [fullMapPolylines, setFullMapPolylines] = useState<any>([[0, 0]]);
   const [fullMapCoordinates, setFullMapCoordinates] = useState<coordinatesType>(
     {} as coordinatesType

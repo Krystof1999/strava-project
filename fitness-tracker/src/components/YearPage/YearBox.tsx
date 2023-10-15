@@ -75,7 +75,6 @@ const YearBox = ({
   }) => {
     setSelectedTab("MONTH");
 
-    console.log(month);
     const weeksInMonth = getWeeksInMonth(displayYearDate.year, month.number);
     const start = weeksInMonth[0].start;
     const end = weeksInMonth[weeksInMonth.length - 1].end;
