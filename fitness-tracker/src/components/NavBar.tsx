@@ -1,9 +1,8 @@
-interface Props {
-  selectedTab: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
+import useSelectedTabContext from "./SelectedTab/useSelectedTabContext";
 
-const NavBar = ({ selectedTab, setSelectedTab }: Props) => {
+const NavBar = () => {
+  const { selectedTab, setSelectedTab } = useSelectedTabContext();
+
   const handleClick = (tab: string) => {
     setSelectedTab(tab);
   };

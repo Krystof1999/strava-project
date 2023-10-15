@@ -8,16 +8,14 @@ import useMonthContext from "./MonthPage/useMonthContext";
 import useWeekContext from "./WeekPage/useWeekContext";
 import useYearContext from "./YearPage/useYearContext";
 import { getWeeksInMonth } from "./utils/dateUtils";
+import useSelectedTabContext from "./SelectedTab/useSelectedTabContext";
 
-interface Props {
-  selectedTab: string;
-}
-
-const ArrowComponent = ({ selectedTab }: Props) => {
+const ArrowComponent = () => {
   const { displayDayDate, setDisplayDayDate } = useDayContext();
   const { displayWeekDate, setDisplayWeekDate } = useWeekContext();
   const { displayMonthDate, setDisplayMonthDate } = useMonthContext();
   const { displayYearDate, setDisplayYearDate } = useYearContext();
+  const { selectedTab } = useSelectedTabContext();
 
   const year_week = DateTime.fromFormat(
     displayWeekDate.start,

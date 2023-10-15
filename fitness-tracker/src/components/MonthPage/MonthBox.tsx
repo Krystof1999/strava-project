@@ -8,14 +8,12 @@ import EmptyMonthBox from "./EmptyMonthBox";
 import MonthBoxSkeleton from "./MonthBoxSkeleton";
 import WeekActivities from "./WeekActivities";
 import useMonthContext from "./useMonthContext";
+import useSelectedTabContext from "../SelectedTab/useSelectedTabContext";
 
-interface Props {
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const MonthBox = ({ setSelectedTab }: Props) => {
+const MonthBox = () => {
   const { setDisplayWeekDate } = useWeekContext();
   const { displayMonthDate } = useMonthContext();
+  const { setSelectedTab } = useSelectedTabContext();
 
   const startTimeStamp = Math.floor(
     DateTime.fromFormat(displayMonthDate.start, "dd.MM.yyyy").toSeconds()

@@ -8,14 +8,12 @@ import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
 import WeekBoxSkeleton from "./WeekBoxSkeleton";
 import useWeekContext from "./useWeekContext";
+import useSelectedTabContext from "../SelectedTab/useSelectedTabContext";
 
-interface Props {
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const WeekBox = ({ setSelectedTab }: Props) => {
+const WeekBox = () => {
   const { setDisplayDayDate } = useDayContext();
   const { displayWeekDate } = useWeekContext();
+  const { setSelectedTab } = useSelectedTabContext();
 
   const {
     data: activities,

@@ -8,14 +8,12 @@ import { getWeeksInMonth } from "../utils/dateUtils";
 import YearBoxSkeleton from "./YearBoxSkeleton";
 import useYearContext from "./useYearContext";
 import useMonthContext from "../MonthPage/useMonthContext";
+import useSelectedTabContext from "../SelectedTab/useSelectedTabContext";
 
-interface Props {
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const YearBox = ({ setSelectedTab }: Props) => {
+const YearBox = () => {
   const { setDisplayMonthDate } = useMonthContext();
   const { displayYearDate } = useYearContext();
+  const { setSelectedTab } = useSelectedTabContext();
 
   const {
     data: yearActivities,

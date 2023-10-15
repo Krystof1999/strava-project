@@ -6,10 +6,9 @@ import MonthProvider from "./components/MonthPage/MonthProvider";
 import NavBar from "./components/NavBar";
 import WeekProvider from "./components/WeekPage/WeekProvider";
 import YearProvider from "./components/YearPage/YearProvider";
+import SelectedTabProvider from "./components/SelectedTab/SelectedTabProvider";
 
 function App() {
-  const [selectedTab, setSelectedTab] = useState("DAY");
-
   const [fullMap, setFullMap] = useState(false);
 
   return (
@@ -18,24 +17,18 @@ function App() {
         <MonthProvider>
           <WeekProvider>
             <DayProvider>
-              {!fullMap ? (
-                <>
-                  <NavBar
-                    setSelectedTab={setSelectedTab}
-                    selectedTab={selectedTab}
-                  />
-                  <ArrowComponent selectedTab={selectedTab} />
-                </>
-              ) : (
-                ""
-              )}
+              <SelectedTabProvider>
+                {!fullMap ? (
+                  <>
+                    <NavBar />
+                    <ArrowComponent />
+                  </>
+                ) : (
+                  ""
+                )}
 
-              <ComponentBox
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-                fullMap={fullMap}
-                setFullMap={setFullMap}
-              />
+                <ComponentBox fullMap={fullMap} setFullMap={setFullMap} />
+              </SelectedTabProvider>
             </DayProvider>
           </WeekProvider>
         </MonthProvider>
