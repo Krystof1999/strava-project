@@ -3,29 +3,27 @@ import { useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { DisplayDayDate } from "../entities/DisplayDate";
 import { MonthDate } from "../entities/MonthDate";
-import { YearDate } from "../entities/YearDate";
 import DateTitle from "./DateTitle";
 import useDayContext from "./DayPage/useDayContext";
 import useWeekContext from "./WeekPage/useWeekContext";
+import useYearContext from "./YearPage/useYearContext";
 import { getWeeksInMonth } from "./utils/dateUtils";
 
 interface Props {
   selectedTab: string;
   displayMonthDate: MonthDate;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
-  displayYearDate: YearDate;
-  setDisplayYearDate: React.Dispatch<React.SetStateAction<YearDate>>;
 }
 
 const ArrowComponent = ({
   selectedTab,
   displayMonthDate,
   setDisplayMonthDate,
-  displayYearDate,
-  setDisplayYearDate,
 }: Props) => {
   const { displayDayDate, setDisplayDayDate } = useDayContext();
   const { displayWeekDate, setDisplayWeekDate } = useWeekContext();
+
+  const { displayYearDate, setDisplayYearDate } = useYearContext();
 
   const year_week = DateTime.fromFormat(
     displayWeekDate.start,

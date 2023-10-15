@@ -1,5 +1,4 @@
 import { MonthDate } from "../entities/MonthDate";
-import { YearDate } from "../entities/YearDate";
 import DayBox from "./DayPage/DayBox";
 import MonthBox from "./MonthPage/MonthBox";
 import WeekBox from "./WeekPage/WeekBox";
@@ -9,7 +8,6 @@ interface Props {
   selectedTab: string;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   displayMonthDate: MonthDate;
-  displayYearDate: YearDate;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
   fullMap: boolean;
@@ -19,7 +17,6 @@ const ComponentBox = ({
   selectedTab,
   setSelectedTab,
   displayMonthDate,
-  displayYearDate,
   setDisplayMonthDate,
   fullMap,
   setFullMap,
@@ -38,7 +35,6 @@ const ComponentBox = ({
       )}
       {selectedTab === "YEAR" && (
         <YearBox
-          displayYearDate={displayYearDate}
           setSelectedTab={setSelectedTab}
           setDisplayMonthDate={setDisplayMonthDate}
         />

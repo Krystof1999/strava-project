@@ -1,24 +1,21 @@
 import { DateTime } from "luxon";
-import { YearDate } from "../../entities/YearDate";
+import { MonthDate } from "../../entities/MonthDate";
 import useStravaActivities from "../../hooks/useStravaActivities";
+import LazyIcon from "../LazyIcon";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
-import LazyIcon from "../LazyIcon";
-import YearBoxSkeleton from "./YearBoxSkeleton";
 import { getWeeksInMonth } from "../utils/dateUtils";
-import { MonthDate } from "../../entities/MonthDate";
+import YearBoxSkeleton from "./YearBoxSkeleton";
+import useYearContext from "./useYearContext";
 
 interface Props {
-  displayYearDate: YearDate;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
   setDisplayMonthDate: React.Dispatch<React.SetStateAction<MonthDate>>;
 }
 
-const YearBox = ({
-  displayYearDate,
-  setSelectedTab,
-  setDisplayMonthDate,
-}: Props) => {
+const YearBox = ({ setSelectedTab, setDisplayMonthDate }: Props) => {
+  const { displayYearDate } = useYearContext();
+
   const {
     data: yearActivities,
     isLoading,

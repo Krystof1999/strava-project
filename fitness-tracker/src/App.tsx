@@ -4,10 +4,10 @@ import ArrowComponent from "./components/ArrowComponent";
 import ComponentBox from "./components/ComponentBox";
 import { DayProvider } from "./components/DayPage";
 import NavBar from "./components/NavBar";
+import WeekProvider from "./components/WeekPage/WeekProvider";
+import YearProvider from "./components/YearPage/YearProvider";
 import { getWeeksInMonth } from "./components/utils/dateUtils";
 import { MonthDate } from "./entities/MonthDate";
-import { YearDate } from "./entities/YearDate";
-import WeekProvider from "./components/WeekPage/WeekProvider";
 
 function App() {
   const todayDate = DateTime.now();
@@ -31,53 +31,42 @@ function App() {
     weeksInMonth: weeksInMonth,
   });
 
-  // Calculate timestamps for year view
-  const startTimeStampYear = Math.floor(todayDate.startOf("year").toSeconds());
-  const endTimeStampYear = Math.floor(todayDate.endOf("year").toSeconds());
-
-  const [displayYearDate, setDisplayYearDate] = useState<YearDate>({
-    year: startYear,
-    startTimeStamp: startTimeStampYear,
-    endTimeStamp: endTimeStampYear,
-  });
-
   const [selectedTab, setSelectedTab] = useState("DAY");
 
   const [fullMap, setFullMap] = useState(false);
 
   return (
     <>
-      <WeekProvider>
-        <DayProvider>
-          {!fullMap ? (
-            <>
-              <NavBar
-                setSelectedTab={setSelectedTab}
-                selectedTab={selectedTab}
-              />
-              <ArrowComponent
-                selectedTab={selectedTab}
-                displayMonthDate={displayMonthDate}
-                setDisplayMonthDate={setDisplayMonthDate}
-                displayYearDate={displayYearDate}
-                setDisplayYearDate={setDisplayYearDate}
-              />
-            </>
-          ) : (
-            ""
-          )}
+      <YearProvider>
+        <WeekProvider>
+          <DayProvider>
+            {!fullMap ? (
+              <>
+                <NavBar
+                  setSelectedTab={setSelectedTab}
+                  selectedTab={selectedTab}
+                />
+                <ArrowComponent
+                  selectedTab={selectedTab}
+                  displayMonthDate={displayMonthDate}
+                  setDisplayMonthDate={setDisplayMonthDate}
+                />
+              </>
+            ) : (
+              ""
+            )}
 
-          <ComponentBox
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-            displayMonthDate={displayMonthDate}
-            displayYearDate={displayYearDate}
-            setDisplayMonthDate={setDisplayMonthDate}
-            fullMap={fullMap}
-            setFullMap={setFullMap}
-          />
-        </DayProvider>
-      </WeekProvider>
+            <ComponentBox
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+              displayMonthDate={displayMonthDate}
+              setDisplayMonthDate={setDisplayMonthDate}
+              fullMap={fullMap}
+              setFullMap={setFullMap}
+            />
+          </DayProvider>
+        </WeekProvider>
+      </YearProvider>
     </>
   );
 }
