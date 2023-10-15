@@ -15,7 +15,6 @@ import DayActivityProperty from "./DayActivityProperty";
 import DayBoxSkeleton from "./DayBoxSkeleton";
 
 interface Props {
-  // displayDayDate: DisplayDayDate;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
   fullMap: boolean;
 }
@@ -141,49 +140,6 @@ const DayBox = ({ fullMap, setFullMap }: Props) => {
       )}
     </>
   );
-
-  // return (
-  //   <>
-  //     {!fullMap ? (
-  //       <>
-  //         {/* ... other code ... */}
-  //         {activities?.map((activity, idx) => (
-  //           <div
-  //             key={activity.name}
-  //             className="my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
-  //           >
-  //             {/* ... other activity content ... */}
-  //             {centerMapView[idx].lat !== 0 || centerMapView[idx].lng !== 0 ? (
-  //               <div>
-  //                 <Map
-  //                   coordinates={{
-  //                     lat: centerMapView[idx].lat,
-  //                     lng: centerMapView[idx].lng,
-  //                   }}
-  //                   mapPolylines={mapPolylines[idx]}
-  //                   setFullMap={setFullMap}
-  //                   setFullMapPolylines={setFullMapPolylines}
-  //                   setFullMapCoordinates={setFullMapCoordinates}
-  //                 />
-  //               </div>
-  //             ) : (
-  //               ""
-  //             )}
-  //           </div>
-  //         ))}
-  //       </>
-  //     ) : (
-  //       <FullMap
-  //         coordinates={{
-  //           lat: fullMapCoordinates.lat,
-  //           lng: fullMapCoordinates.lng,
-  //         }}
-  //         mapPolylines={fullMapPolylines}
-  //         setFullMap={setFullMap}
-  //       />
-  //     )}
-  //   </>
-  // );
 };
 
 export default DayBox;
