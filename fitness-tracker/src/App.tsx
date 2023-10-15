@@ -15,23 +15,6 @@ function App() {
   const startMonth = todayDate.month;
   const startYear = todayDate.year;
 
-  // const startOfWeek = todayDate.startOf("week");
-  // const endOfWeek = todayDate.endOf("week");
-
-  // const formattedStartOfWeek = startOfWeek.toFormat("dd.MM.yyyy");
-  // const formattedEndOfWeek = endOfWeek.toFormat("dd.MM.yyyy");
-
-  // // Calculate timestamps for the next week
-  // const startWeekTimeStamp = Math.floor(startOfWeek.toSeconds());
-  // const endWeekTimeStamp = Math.floor(endOfWeek.toSeconds());
-
-  // const [displayWeekDate, setDisplayWeekDate] = useState<WeekDate>({
-  //   start: formattedStartOfWeek,
-  //   end: formattedEndOfWeek,
-  //   startTimeStamp: startWeekTimeStamp,
-  //   endTimeStamp: endWeekTimeStamp,
-  // });
-
   const currentMonth = todayDate.toFormat("MMMM");
   const weeksInMonth = getWeeksInMonth(todayDate.year, todayDate.month);
 
