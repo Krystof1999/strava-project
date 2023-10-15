@@ -3,7 +3,7 @@ import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
 import { DateTime } from "luxon";
 import { useState } from "react";
-import useDayContext from "../../hooks/useDayContext";
+import useDayContext from "./useDayContext";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
 import FullMap from "../FullMap";

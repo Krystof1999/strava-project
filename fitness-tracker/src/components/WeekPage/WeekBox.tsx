@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { Activity } from "../../entities/Activity";
 import { WeekDate } from "../../entities/WeekDate";
-import useDayContext from "../../hooks/useDayContext";
+import useDayContext from "../DayPage/useDayContext";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
 import LazyIcon from "../LazyIcon";

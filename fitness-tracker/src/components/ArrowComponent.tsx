@@ -7,7 +7,7 @@ import { MonthDate } from "../entities/MonthDate";
 import { getWeeksInMonth } from "./utils/dateUtils";
 import { useState } from "react";
 import { YearDate } from "../entities/YearDate";
-import useDayContext from "../hooks/useDayContext";
+import useDayContext from "./DayPage/useDayContext";
 
 interface Props {
   selectedTab: string;

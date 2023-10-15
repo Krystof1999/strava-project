@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import DayContext from "../components/contexts/dayContext";
+import DayContext from "./dayContext";
 
 const useDayContext = () => useContext(DayContext);
 

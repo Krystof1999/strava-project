@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import { DisplayDayDate } from "../entities/DisplayDate";
-import DayContext from "./contexts/dayContext";
+import { DisplayDayDate } from "../../entities/DisplayDate";
+import DayContext from "./dayContext";
 import { DateTime } from "luxon";
 
 interface Props {

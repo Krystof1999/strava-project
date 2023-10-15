@@ -2,12 +2,12 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 import ArrowComponent from "./components/ArrowComponent";
 import ComponentBox from "./components/ComponentBox";
-import DayProvider from "./components/DayProvider";
 import NavBar from "./components/NavBar";
 import { getWeeksInMonth } from "./components/utils/dateUtils";
 import { MonthDate } from "./entities/MonthDate";
 import { WeekDate } from "./entities/WeekDate";
 import { YearDate } from "./entities/YearDate";
+import { DayProvider } from "./components/DayPage";
 
 function App() {
   const todayDate = DateTime.now();
