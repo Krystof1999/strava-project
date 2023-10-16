@@ -4,6 +4,7 @@ import { MapContainer } from "react-leaflet/MapContainer";
 
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
+import { LatLngExpression } from "leaflet";
 
 export interface coordinatesType {
   lat: number;
@@ -12,10 +13,13 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mapPolylines: any;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-  setFullMapPolylines: React.Dispatch<React.SetStateAction<number[][]>>;
+  setFullMapPolylines: React.Dispatch<
+    React.SetStateAction<LatLngExpression[][]>
+  >;
   setFullMapCoordinates: React.Dispatch<React.SetStateAction<coordinatesType>>;
 }
 

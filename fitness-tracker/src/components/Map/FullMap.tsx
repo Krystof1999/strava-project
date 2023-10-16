@@ -5,6 +5,7 @@ import { MapContainer } from "react-leaflet/MapContainer";
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { LatLngExpression } from "leaflet";
 
 export interface coordinatesType {
   lat: number;
@@ -13,7 +14,7 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-  mapPolylines: [number, number][][];
+  mapPolylines: LatLngExpression[][];
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

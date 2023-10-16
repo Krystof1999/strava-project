@@ -6,13 +6,14 @@ import { useState } from "react";
 import useDayContext from "./useDayContext";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
-import FullMap from "../FullMap";
 import LazyIcon from "../LazyIcon";
-import Map, { coordinatesType } from "../Map";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
 import DayActivityProperty from "./DayActivityProperty";
 import DayBoxSkeleton from "./DayBoxSkeleton";
+import { coordinatesType } from "../Map/Map";
+import FullMap from "../Map/FullMap";
+import Map from "../Map/Map";
 
 interface Props {
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -94,39 +95,44 @@ const DayBox = ({ fullMap, setFullMap }: Props) => {
           <div className="mt-4">
             <SumDistance sumsOfKm={sumOfKmPerDay} />
           </div>
-          {activities?.map((activity, idx) => (
-            <div
-              className=" my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
-              key={activity.name}
-            >
-              <div className="flex items-center ">
-                <ActivityIcon activity={activity} />
-                <div className="ml-[20px] ">
-                  <h1 className=" text-[15px] font-medium">{activity.name}</h1>
+          {activities?.map((activity, idx) => {
+            return (
+              <div
+                className=" my-5 mx-10 border border-1 border-gray-300 rounded-md p-2 activity-font"
+                key={activity.name}
+              >
+                <div className="flex items-center ">
+                  <ActivityIcon activity={activity} />
+                  <div className="ml-[20px] ">
+                    <h1 className=" text-[15px] font-medium">
+                      {activity.name}
+                    </h1>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-10 pl-5">
-                <DayActivityProperty activity={activity} />
-              </div>
+                <div className="mt-10 pl-5">
+                  <DayActivityProperty activity={activity} />
+                </div>
 
-              {centerMapView[idx].lat !== 0 || centerMapView[idx].lng !== 0 ? (
-                <div>
-                  <Map
-                    coordinates={{
-                      lat: centerMapView[idx].lat,
-                      lng: centerMapView[idx].lng,
-                    }}
-                    mapPolylines={mapPolylines[idx]}
-                    setFullMap={setFullMap}
-                    setFullMapPolylines={setFullMapPolylines}
-                    setFullMapCoordinates={setFullMapCoordinates}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          ))}
+                {centerMapView[idx].lat !== 0 ||
+                centerMapView[idx].lng !== 0 ? (
+                  <div>
+                    <Map
+                      coordinates={{
+                        lat: centerMapView[idx].lat,
+                        lng: centerMapView[idx].lng,
+                      }}
+                      mapPolylines={mapPolylines[idx]}
+                      setFullMap={setFullMap}
+                      setFullMapPolylines={setFullMapPolylines}
+                      setFullMapCoordinates={setFullMapCoordinates}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            );
+          })}
         </>
       ) : (
         <FullMap
