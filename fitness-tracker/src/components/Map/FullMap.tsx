@@ -14,7 +14,7 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-  mapPolylines: LatLngExpression[][];
+  mapPolylines: LatLngExpression[];
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

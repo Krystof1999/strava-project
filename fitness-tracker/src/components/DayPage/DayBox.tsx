@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import polyline from "@mapbox/polyline";
 import { LatLngExpression } from "leaflet";
 import { DateTime } from "luxon";
 import { useState } from "react";
-import useDayContext from "./useDayContext";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
 import LazyIcon from "../LazyIcon";
+import FullMap from "../Map/FullMap";
+import Map, { coordinatesType } from "../Map/Map";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
+import {
+  calculateCenterOfTheMapView,
+  getMapPolylines,
+} from "../utils/mapUtils";
 import DayActivityProperty from "./DayActivityProperty";
 import DayBoxSkeleton from "./DayBoxSkeleton";
-import { coordinatesType } from "../Map/Map";
-import FullMap from "../Map/FullMap";
-import Map from "../Map/Map";
+import useDayContext from "./useDayContext";
 
 interface Props {
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +24,9 @@ interface Props {
 const DayBox = ({ fullMap, setFullMap }: Props) => {
   const { displayDayDate } = useDayContext();
 
-  const [fullMapPolylines, setFullMapPolylines] = useState<any>([[0, 0]]);
+  const [fullMapPolylines, setFullMapPolylines] = useState<LatLngExpression[]>([
+    [0, 0],
+  ]);
   const [fullMapCoordinates, setFullMapCoordinates] = useState<coordinatesType>(
     {} as coordinatesType
   );
@@ -63,31 +66,9 @@ const DayBox = ({ fullMap, setFullMap }: Props) => {
   if (error) return <p>{error.message}</p>;
   if (activities.length === 0) return <LazyIcon />;
 
-  const mapPolylines: LatLngExpression[][] = activities.map((activity) => {
-    const activity_polyline = activity.map.summary_polyline;
-    const decodedMapPolyline = polyline.decode(
-      activity_polyline
-    ) as LatLngExpression[];
-    return decodedMapPolyline;
-  });
-
-  // Calculate the center of the polyline coordinates
-  function calculateCenterOfTheMapView(mapPolylines: any): coordinatesType[] {
-    return mapPolylines.map((polyline: any) => {
-      const latitudes = polyline.map((point: any) => (point as number[])[0]);
-      const longitudes = polyline.map((point: any) => (point as number[])[1]);
-
-      const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
-      const centerLng = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
-
-      return {
-        lat: isNaN(centerLat) ? 0 : centerLat,
-        lng: isNaN(centerLng) ? 0 : centerLng,
-      };
-    });
-  }
-
+  const mapPolylines = getMapPolylines(activities);
   const centerMapView = calculateCenterOfTheMapView(mapPolylines);
+
   return (
     <>
       {!fullMap ? (

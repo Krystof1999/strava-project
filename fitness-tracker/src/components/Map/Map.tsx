@@ -14,12 +14,9 @@ export interface coordinatesType {
 interface Props {
   coordinates: coordinatesType;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mapPolylines: any;
+  mapPolylines: LatLngExpression[];
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-  setFullMapPolylines: React.Dispatch<
-    React.SetStateAction<LatLngExpression[][]>
-  >;
+  setFullMapPolylines: React.Dispatch<React.SetStateAction<LatLngExpression[]>>;
   setFullMapCoordinates: React.Dispatch<React.SetStateAction<coordinatesType>>;
 }
 
@@ -40,7 +37,6 @@ const Map = ({
   };
 
   const handleClick = () => {
-    // console.log(mapPolylines);
     setFullMapPolylines(mapPolylines);
     setFullMapCoordinates(coordinates);
     setFullMap(true);
