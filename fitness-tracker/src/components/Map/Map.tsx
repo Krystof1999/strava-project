@@ -5,6 +5,7 @@ import { MapContainer } from "react-leaflet/MapContainer";
 import "leaflet/dist/leaflet.css";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { LatLngExpression } from "leaflet";
+import useMapContext from "./useMapContext";
 
 export interface coordinatesType {
   lat: number;
@@ -13,20 +14,10 @@ export interface coordinatesType {
 
 interface Props {
   coordinates: coordinatesType;
-
   mapPolylines: LatLngExpression[];
-  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-  setFullMapPolylines: React.Dispatch<React.SetStateAction<LatLngExpression[]>>;
-  setFullMapCoordinates: React.Dispatch<React.SetStateAction<coordinatesType>>;
 }
 
-const Map = ({
-  coordinates,
-  mapPolylines,
-  setFullMap,
-  setFullMapPolylines,
-  setFullMapCoordinates,
-}: Props) => {
+const Map = ({ coordinates, mapPolylines }: Props) => {
   const MapUpdater = () => {
     const map = useMap();
     useEffect(() => {
@@ -35,6 +26,9 @@ const Map = ({
 
     return null;
   };
+
+  const { setFullMap, setFullMapPolylines, setFullMapCoordinates } =
+    useMapContext();
 
   const handleClick = () => {
     setFullMapPolylines(mapPolylines);

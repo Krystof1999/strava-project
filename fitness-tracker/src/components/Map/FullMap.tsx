@@ -3,26 +3,25 @@ import { Polyline, useMap } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 
 import "leaflet/dist/leaflet.css";
-import { TileLayer } from "react-leaflet/TileLayer";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { LatLngExpression } from "leaflet";
+import { TileLayer } from "react-leaflet/TileLayer";
+import useMapContext from "./useMapContext";
 
 export interface coordinatesType {
   lat: number;
   lng: number;
 }
 
-interface Props {
-  coordinates: coordinatesType;
-  mapPolylines: LatLngExpression[];
-  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const FullMap = () => {
+  const { setFullMap, fullMapCoordinates, fullMapPolylines } = useMapContext();
 
-const FullMap = ({ coordinates, mapPolylines, setFullMap }: Props) => {
   const MapUpdater = () => {
     const map = useMap();
     useEffect(() => {
-      map.setView([coordinates.lat, coordinates.lng], map.getZoom());
+      map.setView(
+        [fullMapCoordinates.lat, fullMapCoordinates.lng],
+        map.getZoom()
+      );
     }, [map]);
 
     return null;
@@ -34,7 +33,7 @@ const FullMap = ({ coordinates, mapPolylines, setFullMap }: Props) => {
 
   return (
     <MapContainer
-      center={[coordinates.lat, coordinates.lng]}
+      center={[fullMapCoordinates.lat, fullMapCoordinates.lng]}
       zoom={13}
       scrollWheelZoom={true}
       className="map-full"
@@ -45,7 +44,7 @@ const FullMap = ({ coordinates, mapPolylines, setFullMap }: Props) => {
         attribution='&copy; <a href="https://www.jawg.io/">Jawg</a>'
       />
 
-      <Polyline pathOptions={{ color: "blue" }} positions={mapPolylines} />
+      <Polyline pathOptions={{ color: "blue" }} positions={fullMapPolylines} />
       <MapUpdater />
 
       <div className="close-full-map-icon" onClick={() => handleCose()}>

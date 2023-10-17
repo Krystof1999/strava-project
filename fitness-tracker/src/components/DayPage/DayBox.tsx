@@ -1,11 +1,10 @@
-import { LatLngExpression } from "leaflet";
 import { DateTime } from "luxon";
-import { useState } from "react";
 import useStravaActivities from "../../hooks/useStravaActivities";
 import ActivityIcon from "../ActivityIcon";
 import LazyIcon from "../LazyIcon";
 import FullMap from "../Map/FullMap";
-import Map, { coordinatesType } from "../Map/Map";
+import Map from "../Map/Map";
+import useMapContext from "../Map/useMapContext";
 import SumDistance from "../SumDistance";
 import { getActivityDistanceSum } from "../utils/activityUtils";
 import {
@@ -16,20 +15,9 @@ import DayActivityProperty from "./DayActivityProperty";
 import DayBoxSkeleton from "./DayBoxSkeleton";
 import useDayContext from "./useDayContext";
 
-interface Props {
-  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-  fullMap: boolean;
-}
-
-const DayBox = ({ fullMap, setFullMap }: Props) => {
+const DayBox = () => {
   const { displayDayDate } = useDayContext();
-
-  const [fullMapPolylines, setFullMapPolylines] = useState<LatLngExpression[]>([
-    [0, 0],
-  ]);
-  const [fullMapCoordinates, setFullMapCoordinates] = useState<coordinatesType>(
-    {} as coordinatesType
-  );
+  const { fullMap } = useMapContext();
 
   const startTimeDate = DateTime.fromObject({
     day: displayDayDate.day,
@@ -103,9 +91,6 @@ const DayBox = ({ fullMap, setFullMap }: Props) => {
                         lng: centerMapView[idx].lng,
                       }}
                       mapPolylines={mapPolylines[idx]}
-                      setFullMap={setFullMap}
-                      setFullMapPolylines={setFullMapPolylines}
-                      setFullMapCoordinates={setFullMapCoordinates}
                     />
                   </div>
                 ) : (
@@ -116,14 +101,7 @@ const DayBox = ({ fullMap, setFullMap }: Props) => {
           })}
         </>
       ) : (
-        <FullMap
-          coordinates={{
-            lat: fullMapCoordinates.lat,
-            lng: fullMapCoordinates.lng,
-          }}
-          mapPolylines={fullMapPolylines}
-          setFullMap={setFullMap}
-        />
+        <FullMap />
       )}
     </>
   );

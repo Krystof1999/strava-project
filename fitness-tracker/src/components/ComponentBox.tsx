@@ -4,19 +4,12 @@ import useSelectedTabContext from "./SelectedTab/useSelectedTabContext";
 import WeekBox from "./WeekPage/WeekBox";
 import YearBox from "./YearPage/YearBox";
 
-interface Props {
-  setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
-  fullMap: boolean;
-}
-
-const ComponentBox = ({ fullMap, setFullMap }: Props) => {
+const ComponentBox = () => {
   const { selectedTab } = useSelectedTabContext();
 
   return (
     <div>
-      {selectedTab === "DAY" && (
-        <DayBox fullMap={fullMap} setFullMap={setFullMap} />
-      )}
+      {selectedTab === "DAY" && <DayBox />}
       {selectedTab === "WEEK" && <WeekBox />}
       {selectedTab === "MONTH" && <MonthBox />}
       {selectedTab === "YEAR" && <YearBox />}
