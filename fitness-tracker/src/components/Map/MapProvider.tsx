@@ -9,6 +9,7 @@ interface Props {
 
 const MapProvider = ({ children }: Props) => {
   const [fullMap, setFullMap] = useState(false);
+  const [defaultLayer, setDefaultLayer] = useState(true);
 
   const [fullMapPolylines, setFullMapPolylines] = useState<LatLngExpression[]>([
     [0, 0],
@@ -26,6 +27,8 @@ const MapProvider = ({ children }: Props) => {
         setFullMapPolylines,
         fullMapCoordinates,
         setFullMapCoordinates,
+        defaultLayer,
+        setDefaultLayer,
       }}
     >
       {children}

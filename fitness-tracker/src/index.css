@@ -28,3 +28,16 @@ color:#F68C29;
     z-index: 1000; 
 }
  
+.layer-switcher-fullMap-icon{
+    position:fixed;
+    top: 10px;
+    left: 20px; 
+    z-index: 1000;
+}
+
+.layer-switcher-map-icon{
+    position: absolute;
+    top: 9px;
+    left: 245px;
+    z-index: 1000;
+}

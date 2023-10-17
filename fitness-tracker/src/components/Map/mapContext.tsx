@@ -3,6 +3,8 @@ import React from "react";
 import { coordinatesType } from "./FullMap";
 
 interface MapContextType {
+  defaultLayer: boolean;
+  setDefaultLayer: React.Dispatch<React.SetStateAction<boolean>>;
   fullMap: boolean;
   setFullMap: React.Dispatch<React.SetStateAction<boolean>>;
   fullMapPolylines: LatLngExpression[];
