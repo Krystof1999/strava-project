@@ -64,7 +64,11 @@ const ArrowComponent = () => {
       const previousWeekStart = currentWeekStart.minus({ weeks: 1 });
 
       // Calculate the end date of the previous week (last Sunday)
-      const previousWeekEnd = previousWeekStart.plus({ days: 6 });
+      const previousWeekEnd = previousWeekStart.plus({
+        days: 6,
+        hour: 23,
+        minute: 59,
+      });
 
       const formattedPrevStart = previousWeekStart.toFormat("dd.MM.yyyy"); // Include the year
       const formattedPrevEnd = previousWeekEnd.toFormat("dd.MM.yyyy"); // Include the year
