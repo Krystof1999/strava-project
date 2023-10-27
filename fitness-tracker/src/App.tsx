@@ -12,6 +12,7 @@ function App() {
   const { fullMap } = useMapContext();
 
   return (
+    // test
     <>
       <YearProvider>
         <MonthProvider>
