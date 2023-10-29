@@ -21,8 +21,6 @@ const WeekActivities = ({ weekActivity }: Props) => {
     activityPropertyTime = `${hours}h ${minutes}m`;
   }
 
-  console.log(hours);
-  console.log(minutes);
   return (
     <>
       <div className="flex items-center gap-3">
