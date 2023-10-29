@@ -140,7 +140,6 @@ const WeekBox = () => {
   const activityByEachDay = getActivitiesByEachDay();
   const distanceByEachDay = getActivityDistanceByEachDay();
   const sportTypeByEachDay = getSportTypeByEachDay();
-  console.log(distanceByEachDay);
 
   return (
     <>
