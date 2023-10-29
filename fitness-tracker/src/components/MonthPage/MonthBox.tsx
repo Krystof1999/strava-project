@@ -43,8 +43,11 @@ const MonthBox = () => {
 
   const weekActivities = displayMonthDate.weeksInMonth.map(({ start, end }) => {
     // Convert start and end dates to Luxon DateTime objects - start and end of the week
-    const weekStartDate = DateTime.fromFormat(start, "dd.MM.yyyy");
-    const weekEndDate = DateTime.fromFormat(end, "dd.MM.yyyy");
+    const weekStartDate_prep = DateTime.fromFormat(start, "dd.MM.yyyy");
+    const weekEndDate_prep = DateTime.fromFormat(end, "dd.MM.yyyy");
+
+    const weekStartDate = weekStartDate_prep.plus({ hours: 0, minutes: 0 });
+    const weekEndDate = weekEndDate_prep.plus({ hours: 23, minutes: 59 });
 
     // Find activities within the current week
     const activitiesInWeek = activities?.filter((activity) => {
@@ -122,15 +125,20 @@ const MonthBox = () => {
   );
   const sumOfMonthKm = getActivityDistanceSum(monthActivities);
 
-  const getTimestampsForWeeksInMonth = (weeks: string) => {
+  const getTimestampsForWeeksInMonth_Start = (weeks: string) => {
     const luxonObj = DateTime.fromFormat(weeks, "dd.MM.yyyy");
-    return luxonObj.toSeconds();
+    return luxonObj.plus({ hour: 0, minute: 0 }).toSeconds();
+  };
+
+  const getTimestampsForWeeksInMonth_End = (weeks: string) => {
+    const luxonObj = DateTime.fromFormat(weeks, "dd.MM.yyyy");
+    return luxonObj.plus({ hour: 23, minute: 59 }).toSeconds();
   };
 
   const timeStampsForWeeksInMonth = displayMonthDate.weeksInMonth.map(
     ({ start, end }) => ({
-      startTimeStamp: getTimestampsForWeeksInMonth(start),
-      endTimeStamp: getTimestampsForWeeksInMonth(end),
+      startTimeStamp: getTimestampsForWeeksInMonth_Start(start),
+      endTimeStamp: getTimestampsForWeeksInMonth_End(end),
     })
   );
 
@@ -172,7 +180,6 @@ const MonthBox = () => {
   const weekActivitiesDistancesSum = weekActivitiesDistances.map((element) => {
     return (element.reduce((acc, curr) => acc + curr, 0) / 1000).toFixed(0);
   });
-
   return (
     <>
       <div className="mt-4">

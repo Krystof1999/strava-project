@@ -10,7 +10,6 @@ import { YearProvider } from "./components/YearPage";
 
 function App() {
   const { fullMap } = useMapContext();
-
   return (
     <>
       <YearProvider>
