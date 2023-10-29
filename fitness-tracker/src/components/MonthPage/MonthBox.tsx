@@ -73,11 +73,25 @@ const MonthBox = () => {
       {} as { [sport_type: string]: number }
     );
 
+    const gymTime: { [sport_type: string]: number } = activitiesInWeek.reduce(
+      (acc, ac) => {
+        if (ac.sport_type === "WeightTraining") {
+          if (!acc[ac.sport_type]) {
+            acc[ac.sport_type] = 0;
+          }
+          acc[ac.sport_type] += ac.moving_time;
+        }
+        return acc;
+      },
+      {} as { [sport_type: string]: number }
+    );
+
     // Create an array of sport types with their respective sum of distances
     const sportTypeDistances = Object.keys(sumOfDistancesBySportType).map(
       (sport_type) => ({
         sport_type,
         distance: sumOfDistancesBySportType[sport_type],
+        gymTime: gymTime[sport_type],
       })
     );
 
@@ -186,10 +200,10 @@ const MonthBox = () => {
               </div>
 
               <div className="flex flex-col gap-3">
-                {week.sportTypeDistances.map((activity) => (
+                {week.sportTypeDistances.map((weekActivity) => (
                   <WeekActivities
-                    activity={activity}
-                    key={activity.sport_type}
+                    weekActivity={weekActivity}
+                    key={weekActivity.sport_type}
                   />
                 ))}
               </div>
