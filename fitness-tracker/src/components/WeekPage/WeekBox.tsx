@@ -9,6 +9,7 @@ import { getActivityDistanceSum } from "../utils/activityUtils";
 import WeekBoxSkeleton from "./WeekBoxSkeleton";
 import useWeekContext from "./useWeekContext";
 import useSelectedTabContext from "../SelectedTab/useSelectedTabContext";
+import WeekBoxDetail from "./WeekBoxDetail";
 
 const WeekBox = () => {
   const { setDisplayDayDate } = useDayContext();
@@ -67,15 +68,27 @@ const WeekBox = () => {
 
     return activitiesByDate;
   };
+
   const getActivityDistanceByEachDay = () => {
-    const distanceByEachDay: { [date: string]: number } = {};
+    const distanceByEachDay: {
+      [date: string]: { distance: number; moving_time: number };
+    } = {};
+
     daysInWeek.forEach((day) => {
-      distanceByEachDay[day.date] =
-        activityByEachDay[day.date]?.reduce(
+      if (!distanceByEachDay[day.date]) {
+        distanceByEachDay[day.date] = { distance: 0, moving_time: 0 };
+      }
+      distanceByEachDay[day.date].distance =
+        (activityByEachDay[day.date] || []).reduce(
           (totalDistance, activity) => totalDistance + activity.distance,
           0
         ) / 1000;
+
+      distanceByEachDay[day.date].moving_time = (
+        activityByEachDay[day.date] || []
+      ).reduce((totalTime, activity) => totalTime + activity.moving_time, 0);
     });
+
     return distanceByEachDay;
   };
 
@@ -127,6 +140,7 @@ const WeekBox = () => {
   const activityByEachDay = getActivitiesByEachDay();
   const distanceByEachDay = getActivityDistanceByEachDay();
   const sportTypeByEachDay = getSportTypeByEachDay();
+  console.log(distanceByEachDay);
 
   return (
     <>
@@ -138,33 +152,26 @@ const WeekBox = () => {
           onClick={() => handleDayClick(day.date)}
           key={day.date}
           className={`my-2 mx-10 py-3 border border-1 border-gray-300 rounded-md flex justify-between pl-2 pr-2 activity-font
-          ${
-            !isNaN(distanceByEachDay[day.date])
-              ? ""
-              : "border-gray-100 text-gray-200 h-[56px]"
-          }`}
+        ${
+          distanceByEachDay[day.date]?.distance > 0
+            ? ""
+            : distanceByEachDay[day.date]?.moving_time > 0
+            ? ""
+            : '"border-gray-100 text-gray-200 h-[56px]"'
+        }`}
         >
           <div className="flex gap-2 items-center">
             <p>{day.day}</p>
             <p>{day.date}</p>
 
-            {sportTypeByEachDay[day.date].map((sportType, idx) => (
+            {sportTypeByEachDay[day.date]?.map((sportType, idx) => (
               <div key={idx}>
                 <ActivityIcon activityType={sportType} />
               </div>
             ))}
           </div>
 
-          {!isNaN(distanceByEachDay[day.date]) ? (
-            <p className=" text-[#F68C29]">
-              {distanceByEachDay[day.date].toFixed(2)}
-              <span className="text-black"> km</span>
-            </p>
-          ) : (
-            <p>
-              0<span className="text-gray-200"> km</span>
-            </p>
-          )}
+          <WeekBoxDetail distanceByEachDay={distanceByEachDay} day={day} />
         </div>
       ))}
     </>
