@@ -18,7 +18,8 @@ type SportType =
   | "Swim"
   | "NordicSki"
   | "WeightTraining"
-  | "AlpineSki";
+  | "AlpineSki"
+  | "BackcountrySki";
 
 const ActivityIcon = ({ activity, activityType }: Props) => {
   const iconsMap = {
@@ -30,6 +31,7 @@ const ActivityIcon = ({ activity, activityType }: Props) => {
     NordicSki: <FaSkiingNordic size={30} />,
     WeightTraining: <GiWeightLiftingUp size={30} />,
     AlpineSki: <FaSkiing size={30} />,
+    BackcountrySki: <FaSkiingNordic size={30} />,
   };
 
   const sportType = activity?.sport_type as SportType;
